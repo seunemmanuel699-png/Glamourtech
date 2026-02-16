@@ -130,10 +130,10 @@ const Home: React.FC = () => {
       {/* Hero Content Section */}
       <section className="relative pt-24 pb-16 flex flex-col items-center text-center px-6 overflow-hidden min-h-[90vh] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline preload="auto" className="w-full h-full object-cover opacity-20">
+          <video autoPlay loop muted playsInline preload="auto" className="w-full h-full object-cover opacity-40">
             <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/backgrounmovie.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-transparent to-brand-black opacity-90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-transparent to-brand-black opacity-80"></div>
         </div>
 
         <div className="max-w-5xl mx-auto z-10 relative">
