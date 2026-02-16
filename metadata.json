@@ -1,0 +1,8 @@
+{
+  "name": "Glamourtech AI & Automation",
+  "description": "High-ticket B2B AI & Automation services platform focused on enterprise ROI, scalability, and security.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
