@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -39,17 +38,26 @@ const Home: React.FC = () => {
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.4
+      threshold: 0.1 
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (welcomeVideoRef.current) {
           if (entry.isIntersecting) {
+            // Attempt unmuted playback immediately
             welcomeVideoRef.current.muted = false;
             const playPromise = welcomeVideoRef.current.play();
+            
             if (playPromise !== undefined) {
-              playPromise.catch(() => {});
+              playPromise.catch(() => {
+                // If browser blocks unmuted autoplay, try muted as fallback 
+                // but keep trying to unmute on user interaction via the standard 'controls'
+                if (welcomeVideoRef.current) {
+                   welcomeVideoRef.current.muted = true;
+                   welcomeVideoRef.current.play().catch(() => {});
+                }
+              });
             }
           } else {
             welcomeVideoRef.current.pause();
@@ -176,8 +184,8 @@ const Home: React.FC = () => {
               playsInline 
               controls 
               className="w-full h-full object-cover cursor-pointer" 
-              preload="metadata" 
-              muted={false}
+              preload="auto" 
+              muted={false} // Requested: Not muted
             >
               <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/introductory%20video%20and%20work%20showcase/welcome%20video.mp4" type="video/mp4" />
             </video>

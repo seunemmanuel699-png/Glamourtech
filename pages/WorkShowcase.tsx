@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -55,30 +54,25 @@ const WorkShowcase: React.FC = () => {
 
   return (
     <div className="bg-brand-black text-brand-white min-h-screen">
-      {/* Page Header */}
-      <section className="pt-32 pb-12 px-6 relative overflow-hidden border-b border-white/5">
+      {/* Page Header - Padding reduced to allow seamless flow */}
+      <section className="pt-32 pb-4 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
-          <span className="text-brand-red font-black tracking-[0.6em] uppercase text-xs mb-6 block">Production Portfolio</span>
-          <h1 className="text-5xl md:text-7xl font-black heading-font uppercase tracking-tighter leading-none">
+          <span className="text-brand-red font-black tracking-[0.6em] uppercase text-xs mb-2 block">Production Portfolio</span>
+          <h1 className="text-5xl md:text-7xl font-black heading-font uppercase tracking-tighter leading-none mb-0">
             Work <br /><span className="text-brand-red">Showcase</span>
           </h1>
         </div>
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-brand-red/5 rounded-full blur-[120px] pointer-events-none"></div>
       </section>
 
-      {/* AI AGENT SECTION */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-16">
-          <div className="space-y-2">
-            <h2 className="text-4xl md:text-6xl font-black heading-font uppercase tracking-tighter">
-              AI <span className="text-brand-red">Agent</span>
-            </h2>
-            <div className="h-1 w-24 bg-brand-red"></div>
-          </div>
-          <div className="hidden md:block text-right">
+      {/* PORTFOLIO GRID SECTION - SHIFTED UP WITH NO TOP MARGIN/PADDING */}
+      <section className="pb-16 px-6 max-w-7xl mx-auto">
+        <div className="mb-6 flex items-center justify-between border-t border-white/5 pt-6">
+          <div className="text-left">
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 block">System Deployments</span>
-            <span className="text-white font-bold text-xs uppercase tracking-widest">Index 01 — {aiAgentImages.length}</span>
+            <span className="text-white font-bold text-xs uppercase tracking-widest">Index 01 — {aiAgentImages.length} Nodes</span>
           </div>
+          <div className="h-px flex-grow mx-8 bg-white/10 hidden md:block"></div>
         </div>
 
         {/* High Density Thumbnail Image Grid */}
