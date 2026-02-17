@@ -112,7 +112,6 @@ const Home: React.FC = () => {
 
       if (response.ok) {
         setIsSuccess(true);
-        // Immediately redirect to Calendly after successful webhook submission
         window.location.href = "https://calendly.com/glamourtech/new-meeting";
       } else {
         throw new Error("Submission failed");
@@ -130,22 +129,29 @@ const Home: React.FC = () => {
       {/* Hero Content Section */}
       <section className="relative pt-24 pb-16 flex flex-col items-center text-center px-6 overflow-hidden min-h-[90vh] flex items-center justify-center">
         <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline preload="auto" className="w-full h-full object-cover opacity-40">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="auto" 
+            className="w-full h-full object-cover opacity-40 transition-opacity duration-1000"
+          >
             <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/backgrounmovie.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-transparent to-brand-black opacity-80"></div>
         </div>
 
         <div className="max-w-5xl mx-auto z-10 relative">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold heading-font mb-8 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold heading-font mb-8 leading-tight tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
             AI Systems That Replace <br />
             <span className="text-brand-red">Manual Work</span> and Scale Revenue
           </h1>
-          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 font-medium drop-shadow-md">
+          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 font-medium drop-shadow-md animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
             We build production-ready AI agents, automation, and applications for companies that want real ROI—not experiments.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
             <Link to="/contact" className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-sm font-bold text-lg hover:bg-red-700 transition-all shadow-xl shadow-brand-red/30 uppercase tracking-widest text-center">
               Book a Strategy Call
             </Link>
@@ -165,7 +171,14 @@ const Home: React.FC = () => {
               <span className="text-[10px] font-black uppercase tracking-widest text-white">System Active</span>
             </div>
 
-            <video ref={welcomeVideoRef} playsInline controls className="w-full h-full object-cover cursor-pointer" preload="auto" muted={false}>
+            <video 
+              ref={welcomeVideoRef} 
+              playsInline 
+              controls 
+              className="w-full h-full object-cover cursor-pointer" 
+              preload="metadata" 
+              muted={false}
+            >
               <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/introductory%20video%20and%20work%20showcase/welcome%20video.mp4" type="video/mp4" />
             </video>
           </div>
@@ -178,9 +191,9 @@ const Home: React.FC = () => {
           {founderImages.map((src, index) => (
             <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex items-center justify-center ${index === currentPhotoIndex ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}>
               <div className="absolute inset-0 z-0">
-                <img src={src} alt="" className="w-full h-full object-cover blur-3xl opacity-20 scale-110" />
+                <img src={src} alt="" className="w-full h-full object-cover blur-3xl opacity-20 scale-110" loading="lazy" />
               </div>
-              <img src={src} alt={`Glamour Showcase ${index + 1}`} className="relative z-10 w-full h-full object-contain" />
+              <img src={src} alt={`Glamour Showcase ${index + 1}`} className="relative z-10 w-full h-full object-contain" loading={index === 0 ? "eager" : "lazy"} />
             </div>
           ))}
 
