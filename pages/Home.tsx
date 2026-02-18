@@ -35,45 +35,28 @@ const Home: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1 
+    // Attempt to unmute when user interacts with the page (required by browsers)
+    const handleInteraction = () => {
+      if (welcomeVideoRef.current) {
+        welcomeVideoRef.current.muted = false;
+        welcomeVideoRef.current.play().catch(() => {});
+      }
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (welcomeVideoRef.current) {
-          if (entry.isIntersecting) {
-            // Attempt unmuted playback immediately
-            welcomeVideoRef.current.muted = false;
-            const playPromise = welcomeVideoRef.current.play();
-            
-            if (playPromise !== undefined) {
-              playPromise.catch(() => {
-                // If browser blocks unmuted autoplay, try muted as fallback 
-                // but keep trying to unmute on user interaction via the standard 'controls'
-                if (welcomeVideoRef.current) {
-                   welcomeVideoRef.current.muted = true;
-                   welcomeVideoRef.current.play().catch(() => {});
-                }
-              });
-            }
-          } else {
-            welcomeVideoRef.current.pause();
-          }
-        }
-      });
-    }, options);
+    window.addEventListener('click', handleInteraction, { once: true });
+    window.addEventListener('scroll', handleInteraction, { once: true });
 
     if (welcomeVideoRef.current) {
-      observer.observe(welcomeVideoRef.current);
+      // Start muted to ensure it plays immediately without being blocked
+      welcomeVideoRef.current.muted = true;
+      welcomeVideoRef.current.play().catch(() => {
+        console.log("Autoplay prevented, waiting for interaction.");
+      });
     }
 
     return () => {
-      if (welcomeVideoRef.current) {
-        observer.unobserve(welcomeVideoRef.current);
-      }
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('scroll', handleInteraction);
     };
   }, []);
 
@@ -142,8 +125,7 @@ const Home: React.FC = () => {
             loop 
             muted 
             playsInline 
-            preload="auto" 
-            className="w-full h-full object-cover opacity-40 transition-opacity duration-1000"
+            className="w-full h-full object-cover opacity-40"
           >
             <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/backgrounmovie.mp4" type="video/mp4" />
           </video>
@@ -181,11 +163,11 @@ const Home: React.FC = () => {
 
             <video 
               ref={welcomeVideoRef} 
+              autoPlay
               playsInline 
               controls 
               className="w-full h-full object-cover cursor-pointer" 
-              preload="auto" 
-              muted={false} // Requested: Not muted
+              preload="metadata"
             >
               <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/introductory%20video%20and%20work%20showcase/welcome%20video.mp4" type="video/mp4" />
             </video>
@@ -201,7 +183,7 @@ const Home: React.FC = () => {
               <div className="absolute inset-0 z-0">
                 <img src={src} alt="" className="w-full h-full object-cover blur-3xl opacity-20 scale-110" loading="lazy" />
               </div>
-              <img src={src} alt={`Glamour Showcase ${index + 1}`} className="relative z-10 w-full h-full object-contain" loading={index === 0 ? "eager" : "lazy"} />
+              <img src={src} alt={`Glamour Showcase ${index + 1}`} className="relative z-10 w-full h-full object-contain" />
             </div>
           ))}
 

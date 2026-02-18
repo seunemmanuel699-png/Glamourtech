@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -16,17 +15,24 @@ const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Wait for window load event (all images, styles, and initial media requests)
+    // Show the site quickly even if videos are still buffering in the background
+    // This prevents the 'blank screen' issue
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 800);
+
     const handleLoad = () => {
-      // Small artificial delay to ensure smooth transition
-      setTimeout(() => setIsReady(true), 1500);
+      setIsReady(true);
     };
 
     if (document.readyState === 'complete') {
-      handleLoad();
+      setIsReady(true);
     } else {
       window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
+      return () => {
+        window.removeEventListener('load', handleLoad);
+        clearTimeout(timer);
+      };
     }
   }, []);
 
@@ -34,7 +40,7 @@ const App: React.FC = () => {
     <HashRouter>
       <Preloader isReady={isReady} />
       
-      <div className={`min-h-screen flex flex-col bg-brand-black text-brand-white selection:bg-brand-red selection:text-white relative transition-opacity duration-1000 ${isReady ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`min-h-screen flex flex-col bg-brand-black text-brand-white selection:bg-brand-red selection:text-white relative transition-opacity duration-500 ${isReady ? 'opacity-100' : 'opacity-0'}`}>
         <Navbar />
         
         <main className="flex-grow pt-20">

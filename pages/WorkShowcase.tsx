@@ -54,8 +54,8 @@ const WorkShowcase: React.FC = () => {
 
   return (
     <div className="bg-brand-black text-brand-white min-h-screen">
-      {/* Page Header - Padding reduced to allow seamless flow */}
-      <section className="pt-32 pb-4 px-6 relative overflow-hidden">
+      {/* Page Header - No bottom padding to eliminate space */}
+      <section className="pt-32 pb-0 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <span className="text-brand-red font-black tracking-[0.6em] uppercase text-xs mb-2 block">Production Portfolio</span>
           <h1 className="text-5xl md:text-7xl font-black heading-font uppercase tracking-tighter leading-none mb-0">
@@ -65,9 +65,9 @@ const WorkShowcase: React.FC = () => {
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-brand-red/5 rounded-full blur-[120px] pointer-events-none"></div>
       </section>
 
-      {/* PORTFOLIO GRID SECTION - SHIFTED UP WITH NO TOP MARGIN/PADDING */}
-      <section className="pb-16 px-6 max-w-7xl mx-auto">
-        <div className="mb-6 flex items-center justify-between border-t border-white/5 pt-6">
+      {/* PORTFOLIO GRID SECTION - No top padding to eliminate space */}
+      <section className="pb-16 pt-0 px-6 max-w-7xl mx-auto">
+        <div className="mb-6 flex items-center justify-between border-t border-white/5 pt-6 mt-4">
           <div className="text-left">
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 block">System Deployments</span>
             <span className="text-white font-bold text-xs uppercase tracking-widest">Index 01 — {aiAgentImages.length} Nodes</span>
