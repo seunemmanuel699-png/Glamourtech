@@ -35,11 +35,13 @@ const Home: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    // Attempt to unmute when user interacts with the page (required by browsers)
     const handleInteraction = () => {
       if (welcomeVideoRef.current) {
         welcomeVideoRef.current.muted = false;
-        welcomeVideoRef.current.play().catch(() => {});
+        welcomeVideoRef.current.play().catch(() => {
+          // Fallback if unmuted play is blocked
+          if (welcomeVideoRef.current) welcomeVideoRef.current.muted = true;
+        });
       }
     };
 
@@ -47,11 +49,8 @@ const Home: React.FC = () => {
     window.addEventListener('scroll', handleInteraction, { once: true });
 
     if (welcomeVideoRef.current) {
-      // Start muted to ensure it plays immediately without being blocked
       welcomeVideoRef.current.muted = true;
-      welcomeVideoRef.current.play().catch(() => {
-        console.log("Autoplay prevented, waiting for interaction.");
-      });
+      welcomeVideoRef.current.play().catch(() => {});
     }
 
     return () => {
@@ -109,7 +108,7 @@ const Home: React.FC = () => {
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("There was an error submitting your application. Please try again or contact support@glamourtech.ai");
+      alert("There was an error submitting your application. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -118,7 +117,7 @@ const Home: React.FC = () => {
   return (
     <div className="bg-brand-black text-brand-white">
       {/* Hero Content Section */}
-      <section className="relative pt-24 pb-16 flex flex-col items-center text-center px-6 overflow-hidden min-h-[90vh] flex items-center justify-center">
+      <section className="relative pt-24 pb-16 min-h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video 
             autoPlay 
@@ -257,7 +256,7 @@ const Home: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">PHONE NUMBER (WhatsApp Recommend)</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">PHONE NUMBER</label>
                     <input required type="tel" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="+1 234 567 8900" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                   </div>
                   <div className="space-y-4">
@@ -289,7 +288,7 @@ const Home: React.FC = () => {
                   <textarea required rows={4} disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Project Vision / Outcomes Required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
                 </div>
 
-                <button type="submit" disabled={isSubmitting} className="w-full bg-brand-red text-white py-8 font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-2xl shadow-brand-red/20 disabled:bg-red-900 disabled:cursor-not-allowed">
+                <button type="submit" disabled={isSubmitting} className="w-full bg-brand-red text-white py-8 font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-2xl shadow-brand-red/20 disabled:bg-red-900">
                   {isSubmitting ? 'Transmitting Data...' : 'Submit Application'}
                 </button>
               </form>

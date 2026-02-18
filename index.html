@@ -6,6 +6,9 @@
     <meta name="google-site-verification" content="01926d846364410a" />
     <title>Glamourtech | Enterprise AI Systems & Automation</title>
     
+    <!-- Resolve 'google is not defined' error if external scripts or extensions look for it early -->
+    <script>window.google = window.google || {};</script>
+
     <!-- Preload Critical Assets for Speed -->
     <link rel="preload" as="video" href="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/introductory%20video%20and%20work%20showcase/welcome%20video.mp4" type="video/mp4">
     <link rel="preload" as="video" href="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/backgrounmovie.mp4" type="video/mp4">
@@ -74,7 +77,6 @@
 </head>
   <body>
     <div id="root"></div>
-    <!-- Entry point for the React application -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
