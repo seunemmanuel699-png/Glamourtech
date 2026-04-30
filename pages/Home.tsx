@@ -108,7 +108,7 @@ const Home: React.FC = () => {
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("There was an error submitting your application. Please try again.");
+      alert("There was an error submitting your application. Please try again or reach out to glamourtechsolution@gmail.com");
     } finally {
       setIsSubmitting(false);
     }
@@ -238,8 +238,8 @@ const Home: React.FC = () => {
                   <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <h3 className="text-3xl font-black heading-font mb-4 uppercase tracking-tighter">Transmission Successful</h3>
-                <p className="text-gray-400 text-lg mb-10">Redirecting to schedule your meeting...</p>
-                <a href="https://calendly.com/glamourtech/new-meeting" className="text-brand-red font-bold uppercase tracking-widest text-sm hover:underline">Click here if not redirected automatically</a>
+                <p className="text-gray-400 text-lg mb-10">Redirecting to our secure booking gateway...</p>
+                <Link to="/contact" className="text-brand-red font-bold uppercase tracking-widest text-sm hover:underline">Click here to book your strategy call</Link>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-8 relative z-10">

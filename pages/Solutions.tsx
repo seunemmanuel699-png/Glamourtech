@@ -77,9 +77,9 @@ const Solutions: React.FC = () => {
       </div>
 
       <div className="mt-32 text-center bg-brand-red p-20">
-        <h2 className="text-3xl font-bold heading-font mb-8">Need a Custom Architecture?</h2>
+        <h2 className="text-3xl font-bold heading-font mb-8 uppercase tracking-tighter">Need a Custom Architecture?</h2>
         <Link to="/contact" className="bg-brand-black text-white px-10 py-5 font-bold uppercase tracking-widest hover:bg-white hover:text-brand-black transition-all">
-          Request Systems Audit
+          Book a Strategy Call
         </Link>
       </div>
     </div>

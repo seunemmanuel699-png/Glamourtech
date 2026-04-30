@@ -31,22 +31,43 @@ const Footer: React.FC = () => {
           
           {/* Social & Contact Section */}
           <div className="flex flex-col items-start space-y-8">
-            {/* Upwork Profile */}
-            <a 
-              href="https://www.upwork.com/freelancers/~0161750daa781bfcb5?mp_source=share" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="group flex flex-col items-center transition-all text-center"
-            >
-              <div className="w-12 h-12 mb-2 p-1 bg-white rounded-full group-hover:scale-110 transition-transform duration-300 flex items-center justify-center overflow-hidden shadow-lg shadow-white/5">
-                <img 
-                  src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20logos/upwork%20logo.png" 
-                  alt="Upwork Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <span className="text-gray-400 group-hover:text-white transition-colors font-black uppercase text-[10px] tracking-[0.4em]">Upwork Profile</span>
-            </a>
+            <div className="flex items-center space-x-6">
+              {/* Upwork Profile */}
+              <a 
+                href="https://www.upwork.com/freelancers/~0161750daa781bfcb5?mp_source=share" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group flex flex-col items-center transition-all text-center"
+              >
+                <div className="w-12 h-12 mb-2 p-1 bg-white rounded-full group-hover:scale-110 transition-transform duration-300 flex items-center justify-center overflow-hidden shadow-lg shadow-white/5">
+                  <img 
+                    src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20logos/upwork%20logo.png" 
+                    alt="Upwork Logo" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <span className="text-gray-400 group-hover:text-white transition-colors font-black uppercase text-[10px] tracking-[0.4em]">Upwork</span>
+              </a>
+
+              {/* YouTube Channel */}
+              <a 
+                href="https://youtube.com/@glamourtechsolution-n4z?si=HrrmbMYujDsbNmy7" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group flex flex-col items-center transition-all text-center"
+              >
+                <div className="w-12 h-12 mb-2 bg-white/5 rounded-full group-hover:scale-110 transition-transform duration-300 flex items-center justify-center overflow-hidden shadow-lg shadow-white/5 border border-white/10 group-hover:border-red-600/50">
+                  <svg 
+                    className="w-6 h-6 text-red-600"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                  </svg>
+                </div>
+                <span className="text-gray-400 group-hover:text-white transition-colors font-black uppercase text-[10px] tracking-[0.4em]">YouTube</span>
+              </a>
+            </div>
 
             {/* Direct Contact Info */}
             <div className="space-y-6">
@@ -63,10 +84,10 @@ const Footer: React.FC = () => {
               <div className="flex flex-col">
                 <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] mb-1">Official Transmission</span>
                 <a 
-                  href="mailto:seunemmanuel699@gmail.com" 
+                  href="mailto:glamourtechsolution@gmail.com" 
                   className="text-white hover:text-brand-red transition-colors font-bold text-lg tracking-tight"
                 >
-                  seunemmanuel699@gmail.com
+                  glamourtechsolution@gmail.com
                 </a>
               </div>
             </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { Quote } from 'lucide-react';
 
 const aiAgentImages = [
   "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_77_hq720.jpg",
@@ -17,6 +19,27 @@ const aiAgentImages = [
   "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_122_mIqH9QR42eeKoO7mYdYqy4UO3TU.png",
   "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_11_default.png",
   "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_110_maxresdefault.jpg"
+];
+
+const testimonials = [
+  {
+    name: "Sarah Jenkins",
+    title: "COO",
+    company: "FinTech Solutions",
+    quote: "Glamourtech transformed our customer onboarding process. Their AI agents reduced our response time by 80% while maintaining a personal touch and enterprise security.",
+  },
+  {
+    name: "Marcus Thorne",
+    title: "CTO",
+    company: "Global Logistics",
+    quote: "The automation systems deployed by Glamourtech are world-class. Scalability is no longer a concern for our backend infrastructure, allowing us to focus on growth.",
+  },
+  {
+    name: "Elena Rodriguez",
+    title: "Head of Innovation",
+    company: "HealthCorp",
+    quote: "Security was our top priority. Glamourtech's private LLM deployments provided the enterprise-grade protection we needed for sensitive patient data processing.",
+  },
 ];
 
 const WorkShowcase: React.FC = () => {
@@ -162,6 +185,71 @@ const WorkShowcase: React.FC = () => {
         </div>
       )}
 
+      {/* TESTIMONIALS SECTION */}
+      <section className="py-24 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="mb-16">
+            <motion.span 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-brand-red font-black tracking-[0.6em] uppercase text-[10px] mb-2 block"
+            >
+              Client Validation
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl font-black heading-font uppercase tracking-tighter leading-none"
+            >
+              Enterprise <span className="text-brand-red">Impact</span>
+            </motion.h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((t, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
+                className="bg-white/5 border border-white/10 p-8 rounded-sm relative group hover:border-brand-red/30 transition-all duration-500 ease-out"
+              >
+                <Quote className="absolute top-6 right-6 w-8 h-8 text-brand-red/20 group-hover:text-brand-red/40 transition-colors" />
+                
+                <div className="mb-8">
+                  <p className="text-gray-400 text-sm leading-relaxed italic relative z-10">
+                    "{t.quote}"
+                  </p>
+                </div>
+
+                <div className="flex items-center space-x-3 border-t border-white/5 pt-6">
+                  <div className="w-10 h-10 bg-brand-red/20 rounded-full flex items-center justify-center border border-brand-red/30 group-hover:scale-110 transition-transform duration-500">
+                    <span className="text-brand-red font-black text-xs">{t.name.split(' ').map(n => n[0]).join('')}</span>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-sm leading-tight">{t.name}</h4>
+                    <p className="text-gray-500 text-[10px] uppercase font-black tracking-widest leading-tight mt-1">
+                      {t.title} <span className="text-brand-red/60 mx-1">|</span> {t.company}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Decorative highlights */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/10 group-hover:border-brand-red/50 transition-colors"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-transparent group-hover:border-brand-red/30 transition-all duration-700"></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Background Accents */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-red/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-red/5 rounded-full blur-[80px] pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
+      </section>
+
       {/* Technical Footer CTA */}
       <section className="py-32 bg-brand-red relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -179,7 +267,7 @@ const WorkShowcase: React.FC = () => {
             to="/contact" 
             className="inline-block bg-brand-black text-white px-16 py-6 font-black uppercase tracking-[0.4em] hover:bg-white hover:text-brand-black transition-all shadow-2xl active:scale-95"
           >
-            Connect Now
+            Book a Strategy Call
           </Link>
         </div>
       </section>

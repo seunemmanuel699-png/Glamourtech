@@ -12,6 +12,7 @@ const Navbar: React.FC = () => {
     { name: 'Solutions', path: '/solutions', tooltip: 'Autonomous agents & CRM orchestration' },
     { name: 'Industries', path: '/industries', tooltip: 'Vertical-specific implementation logic' },
     { name: 'Training', path: '/training', tooltip: 'Governance, advisory & team upskilling' },
+    { name: 'Contact', path: '/contact', tooltip: 'Direct scheduling & enterprise support' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

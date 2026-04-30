@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const industries = [
   {
@@ -50,6 +51,18 @@ const Industries: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-32 text-center bg-brand-red p-20 relative overflow-hidden">
+        <div className="relative z-10">
+          <h2 className="text-4xl md:text-5xl font-black heading-font mb-8 uppercase tracking-tighter text-white">Specific Systems for Precise Outcomes</h2>
+          <p className="text-white/80 max-w-xl mx-auto mb-10 text-lg font-medium">Ready to deploy vertical-specific AI agents that respect your industry's constraints and security requirements?</p>
+          <Link to="/contact" className="inline-block bg-brand-black text-white px-12 py-5 font-black uppercase tracking-[0.3em] hover:bg-white hover:text-brand-black transition-all shadow-2xl">
+            Book a Strategy Call
+          </Link>
+        </div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-black/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const Training: React.FC = () => {
             <li>• Security & Prompt Engineering</li>
             <li>• Risk Mitigation Protocols</li>
           </ul>
-          <Link to="/contact" className="w-full bg-brand-red text-white py-4 font-bold text-center uppercase tracking-widest">Inquire for Teams</Link>
+          <Link to="/contact" className="w-full bg-brand-red text-white py-4 font-bold text-center uppercase tracking-widest">Book a Strategy Call</Link>
         </div>
 
         <div className="bg-white/5 border border-white/10 p-12 rounded-sm flex flex-col">
@@ -41,7 +41,7 @@ const Training: React.FC = () => {
             <li>• Vendor Stack Selection</li>
             <li>• Institutional Implementation</li>
           </ul>
-          <Link to="/contact" className="w-full bg-white text-brand-black py-4 font-bold text-center uppercase tracking-widest">Book Strategy Session</Link>
+          <Link to="/contact" className="w-full bg-white text-brand-black py-4 font-bold text-center uppercase tracking-widest">Book a Strategy Call</Link>
         </div>
       </div>
 
