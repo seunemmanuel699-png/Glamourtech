@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Logo } from './Logo';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,25 +21,16 @@ const Navbar: React.FC = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-black/80 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Animated Logo Container */}
-        <Link to="/" className="flex items-center h-full py-4 group">
-          <div className="h-full aspect-[4/1] bg-black overflow-hidden rounded-sm border border-white/5 group-hover:border-brand-red/50 transition-all duration-300 relative">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover bg-black"
-              style={{ mixBlendMode: 'screen' }}
-              aria-label="Glamourtech Animated Logo"
-            >
-              <source 
-                src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/glamourtech%20animated%20logo.mp4" 
-                type="video/mp4" 
-              />
-            </video>
-            {/* Fallback black layer to prevent white flash */}
-            <div className="absolute inset-0 bg-black -z-10"></div>
+        {/* Brand Logo & Name */}
+        <Link to="/" className="flex items-center gap-3 group py-2">
+          <Logo size={44} glow={true} />
+          <div className="flex flex-col justify-center">
+            <div className="font-heading font-black tracking-[0.15em] text-lg text-white leading-none">
+              GLAMOUR<span className="text-[#00D2FF]">TECH</span>
+            </div>
+            <div className="text-[8px] font-black tracking-[0.42em] text-gray-400 uppercase mt-1 leading-none">
+              SOLUTION
+            </div>
           </div>
         </Link>
 

@@ -1,29 +1,24 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Logo } from './Logo';
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-brand-black border-t border-white/10 py-16 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2">
-          {/* Animated Logo for Footer */}
-          <Link to="/" className="block h-12 w-48 mb-6 bg-black overflow-hidden rounded-sm border border-white/5 hover:border-brand-red/50 transition-all duration-300 relative">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover bg-black"
-              style={{ mixBlendMode: 'screen' }}
-            >
-              <source 
-                src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/glamourtech%20animated%20logo.mp4" 
-                type="video/mp4" 
-              />
-            </video>
-            {/* Fallback black layer */}
-            <div className="absolute inset-0 bg-black -z-10"></div>
+          {/* Brand Logo & Name */}
+          <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
+            <Logo size={38} glow={true} />
+            <div className="flex flex-col justify-center">
+              <div className="font-heading font-black tracking-[0.15em] text-md text-white leading-none">
+                GLAMOUR<span className="text-[#00D2FF]">TECH</span>
+              </div>
+              <div className="text-[8px] font-black tracking-[0.42em] text-gray-400 uppercase mt-1 leading-none">
+                SOLUTION
+              </div>
+            </div>
           </Link>
           <p className="text-gray-400 max-w-sm mb-8 font-medium">
             Deploying enterprise-grade AI systems that automate revenue and decision-making for serious businesses.
