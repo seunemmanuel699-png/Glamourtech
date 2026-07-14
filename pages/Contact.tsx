@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, MessageSquare, Users2, Clock, Shield, CheckCircle2, ExternalLink } from 'lucide-react';
 import { triggerNotification } from '../components/NotificationSystem';
+import { ReCaptcha } from '../components/ReCaptcha';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const Contact: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const commonCountries = [
     "United States", "United Kingdom", "Canada", "Australia", "Germany", "France", "United Arab Emirates", "Saudi Arabia", "Singapore", "Switzerland", "Netherlands", "Ireland", "Japan", "India", "Brazil", "Mexico"
@@ -23,6 +25,14 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isCaptchaVerified) {
+      triggerNotification(
+        'Security Bypass Prevented',
+        'Please verify the Neural-Gate reCAPTCHA biometric challenge before submitting.',
+        'system'
+      );
+      return;
+    }
     setIsSubmitting(true);
 
     try {
@@ -239,13 +249,25 @@ const Contact: React.FC = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
+                 <div className="space-y-2">
                   <label className="block text-[8px] font-black uppercase tracking-[0.4em] text-gray-500">Bottleneck Description</label>
                   <textarea required rows={2} disabled={isSubmitting} className="w-full bg-white/[0.03] border border-white/10 px-4 py-3 focus:border-brand-red outline-none transition-all text-brand-white font-medium text-sm disabled:opacity-50 resize-none" placeholder="Describe manual processes required for automation..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
                 </div>
 
-                <button type="submit" disabled={isSubmitting} className="w-full bg-brand-red text-white py-5 font-black uppercase tracking-[0.4em] text-[10px] hover:bg-white hover:text-brand-red transition-all shadow-xl shadow-brand-red/10 active:scale-[0.99] disabled:opacity-50 rounded-sm">
-                  {isSubmitting ? 'Transmitting Module...' : 'Initialize Strategy Audit'}
+                <div className="py-2">
+                  <ReCaptcha onVerify={setIsCaptchaVerified} />
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting || !isCaptchaVerified} 
+                  className={`w-full py-5 font-black uppercase tracking-[0.4em] text-[10px] transition-all shadow-xl rounded-sm ${
+                    isCaptchaVerified 
+                      ? 'bg-brand-red text-white hover:bg-white hover:text-brand-red shadow-brand-red/10 cursor-pointer active:scale-[0.99]' 
+                      : 'bg-gray-800 text-gray-500 border border-white/5 cursor-not-allowed shadow-none'
+                  }`}
+                >
+                  {isSubmitting ? 'Transmitting Module...' : !isCaptchaVerified ? 'Complete ReCaptcha to Unlock' : 'Initialize Strategy Audit'}
                 </button>
               </form>
             )}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { triggerNotification } from '../components/NotificationSystem';
+import { ReCaptcha } from '../components/ReCaptcha';
 
 const Home: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Home: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const welcomeVideoRef = useRef<HTMLVideoElement>(null);
 
@@ -80,6 +82,14 @@ const Home: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isCaptchaVerified) {
+      triggerNotification(
+        'Security Bypass Prevented',
+        'Please verify the Neural-Gate reCAPTCHA biometric challenge before submitting.',
+        'system'
+      );
+      return;
+    }
     setIsSubmitting(true);
 
     try {
@@ -297,8 +307,20 @@ const Home: React.FC = () => {
                   <textarea required rows={4} disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Project Vision / Outcomes Required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
                 </div>
 
-                <button type="submit" disabled={isSubmitting} className="w-full bg-brand-red text-white py-8 font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-2xl shadow-brand-red/20 disabled:bg-red-900">
-                  {isSubmitting ? 'Transmitting Data...' : 'Submit Application'}
+                <div className="py-2">
+                  <ReCaptcha onVerify={setIsCaptchaVerified} />
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting || !isCaptchaVerified} 
+                  className={`w-full py-8 font-black uppercase tracking-widest transition-all shadow-2xl rounded-sm ${
+                    isCaptchaVerified 
+                      ? 'bg-brand-red text-white hover:bg-red-700 shadow-brand-red/20 cursor-pointer' 
+                      : 'bg-gray-800 text-gray-500 border border-white/5 cursor-not-allowed shadow-none'
+                  }`}
+                >
+                  {isSubmitting ? 'Transmitting Data...' : !isCaptchaVerified ? 'Complete ReCaptcha to Unlock' : 'Submit Application'}
                 </button>
               </form>
             )}
