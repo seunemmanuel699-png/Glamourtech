@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { RoiCalculator } from '../components/RoiCalculator';
 
 const solutions = [
   {
@@ -76,9 +77,31 @@ const Solutions: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-32 text-center bg-brand-red p-20">
-        <h2 className="text-3xl font-bold heading-font mb-8 uppercase tracking-tighter">Need a Custom Architecture?</h2>
-        <Link to="/contact" className="bg-brand-black text-white px-10 py-5 font-bold uppercase tracking-widest hover:bg-white hover:text-brand-black transition-all">
+      {/* Enterprise ROI Calculator Section */}
+      <div className="mt-32 border-t border-white/5 pt-24">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00D2FF]/10 border border-[#00D2FF]/20 mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF]"></span>
+            <span className="text-[10px] font-black tracking-widest text-[#00D2FF] uppercase">Interactive B2B Simulation</span>
+          </div>
+          <h2 className="text-4xl font-black heading-font text-white uppercase tracking-tight mb-4">
+            Quantify Your <span className="text-[#00D2FF]">Efficiency Gains</span>
+          </h2>
+          <p className="text-gray-400 text-lg leading-relaxed">
+            See exactly how automating workflows and operations translates to direct hours reallocated, overhead eliminated, and revenue unlocked.
+          </p>
+        </div>
+
+        <RoiCalculator />
+      </div>
+
+      <div className="mt-32 text-center bg-gradient-to-r from-[#070D19] to-[#0A162B] border border-white/10 p-12 md:p-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#00D2FF]/5 pointer-events-none"></div>
+        <h2 className="text-3xl font-bold heading-font mb-8 uppercase tracking-tight text-white">Need a Custom Architecture?</h2>
+        <p className="text-gray-400 max-w-xl mx-auto mb-10 text-sm">
+          Every enterprise has unique operational pipelines. Let's design a customized autonomous agent system built specifically for your business operations and compliance requirements.
+        </p>
+        <Link to="/contact" className="inline-block bg-gradient-to-r from-[#0066FF] to-[#00D2FF] hover:from-[#00D2FF] hover:to-[#0066FF] text-[#070D19] px-10 py-5 font-black uppercase tracking-widest transition-all duration-300 rounded-sm shadow-lg shadow-[#00D2FF]/15 active:scale-95">
           Book a Strategy Call
         </Link>
       </div>
