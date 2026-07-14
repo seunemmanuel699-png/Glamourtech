@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Lead and strategy submissions must be securely writable by anyone but strictly unreadable by public clients
+    match /submissions/{submissionId} {
+      allow read: if false;
+      allow create: if request.resource.data.name != null 
+                    && request.resource.data.email != null 
+                    && request.resource.data.description != null
+                    && request.resource.data.createdAt == request.time;
+    }
+  }
+}

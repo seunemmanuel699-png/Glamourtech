@@ -426,12 +426,12 @@ export const NotificationCenter: React.FC = () => {
                 </div>
                 <button
                   onClick={toggleSound}
-                  className={`w-9 h-5 rounded-full transition-all relative ${
+                  className={`w-9 h-5 rounded-full transition-all relative focus:outline-none ${
                     soundEnabled ? 'bg-[#00D2FF]' : 'bg-white/10'
                   }`}
                 >
-                  <div className={`w-3.5 h-3.5 rounded-full bg-[#070D19] absolute top-0.75 transition-all ${
-                    soundEnabled ? 'left-4.5' : 'left-1'
+                  <div className={`w-3.5 h-3.5 rounded-full bg-[#070D19] absolute top-[3px] left-[3px] transition-all duration-200 ${
+                    soundEnabled ? 'translate-x-4' : 'translate-x-0'
                   }`} />
                 </button>
               </div>

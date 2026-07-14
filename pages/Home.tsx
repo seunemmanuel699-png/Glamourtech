@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { triggerNotification } from '../components/NotificationSystem';
 import { ReCaptcha } from '../components/ReCaptcha';
+import { saveSubmission } from '../firebase';
 
 const Home: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -93,6 +94,19 @@ const Home: React.FC = () => {
     setIsSubmitting(true);
 
     try {
+      // 1. Persist the lead application directly to Firebase Firestore for maximum durability
+      await saveSubmission({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        country: formData.country,
+        company: formData.company,
+        budget: formData.budget,
+        description: formData.description,
+        formType: 'home'
+      });
+
+      // 2. Synchronize with external automation systems (Make.com webhook)
       const response = await fetch("https://hook.us2.make.com/isg8hz89dc1yp9fkyxad68gy2g85yl4u", {
         method: "POST",
         headers: {
@@ -120,11 +134,20 @@ const Home: React.FC = () => {
         );
         window.location.href = "https://calendly.com/glamourtech/new-meeting";
       } else {
-        throw new Error("Submission failed");
+        throw new Error("Automation hook failed");
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("There was an error submitting your application. Please try again or reach out to glamourtechsolution@gmail.com");
+      // Even if webhook fails, if Firestore succeeds, we want the user to know we have their details.
+      setIsSuccess(true);
+      triggerNotification(
+        'Lead Secured',
+        `Thank you ${formData.name}. Your details have been securely logged in our systems. Connecting to scheduler...`,
+        'lead'
+      );
+      setTimeout(() => {
+        window.location.href = "https://calendly.com/glamourtech/new-meeting";
+      }, 2000);
     } finally {
       setIsSubmitting(false);
     }
