@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { triggerNotification } from './NotificationSystem';
 
 interface Message {
   role: 'user' | 'model';
@@ -111,9 +112,12 @@ const Chatbot: React.FC = () => {
       const cleanResponse = (modelText || "I've processed your request but the response was empty. Please check your automation configuration.").replace(/\*\*/g, ''); 
       
       setMessages(prev => [...prev, { role: 'model', text: cleanResponse }]);
+      triggerNotification('Automation Consultant', cleanResponse.length > 70 ? cleanResponse.substring(0, 70) + '...' : cleanResponse, 'chat');
     } catch (error) {
       console.error("Consultant logic error:", error);
-      setMessages(prev => [...prev, { role: 'model', text: "I'm having trouble reaching our automation hub. Please ensure the Webhook Response is active in your workflow." }]);
+      const errText = "I'm having trouble reaching our automation hub. Please ensure the Webhook Response is active in your workflow.";
+      setMessages(prev => [...prev, { role: 'model', text: errText }]);
+      triggerNotification('Hub Connectivity Issue', 'Failed to synchronize conversation with the central webhook.', 'chat');
     } finally {
       setIsLoading(false);
     }

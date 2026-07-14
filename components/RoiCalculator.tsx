@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { jsPDF } from 'jspdf';
+import { triggerNotification } from './NotificationSystem';
 import { 
   TrendingUp, 
   Clock, 
@@ -336,6 +337,11 @@ export const RoiCalculator: React.FC = () => {
       doc.text('www.glamourtech.com', pageWidth - 55, pageHeight - 12);
 
       doc.save(`Glamourtech_ROI_Assessment_${automationLevel}.pdf`);
+      triggerNotification(
+        'ROI Report Generated',
+        `Your personalized Glamourtech ROI Feasibility report (+${results.roiPercentage}% Year 1 ROI) has been generated and saved.`,
+        'roi'
+      );
     } catch (err) {
       console.error('Error rendering PDF layout:', err);
     } finally {

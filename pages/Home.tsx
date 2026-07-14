@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { triggerNotification } from '../components/NotificationSystem';
 
 const Home: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -102,6 +103,11 @@ const Home: React.FC = () => {
 
       if (response.ok) {
         setIsSuccess(true);
+        triggerNotification(
+          'Strategic Booking Registered',
+          `Thank you ${formData.name}. Your strategy booking was registered successfully on Make.com hub. Connecting to scheduler...`,
+          'lead'
+        );
         window.location.href = "https://calendly.com/glamourtech/new-meeting";
       } else {
         throw new Error("Submission failed");
@@ -275,12 +281,15 @@ const Home: React.FC = () => {
 
                 <div className="space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Quarterly Budget</label>
-                  <select required disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})}>
-                    <option value="">Select Range</option>
-                    <option value="10k-50k">$10k - $50k</option>
-                    <option value="50k-200k">$50k - $200k</option>
-                    <option value="200k+">$200k+</option>
-                  </select>
+                  <input 
+                    required 
+                    type="text" 
+                    disabled={isSubmitting} 
+                    className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" 
+                    placeholder="e.g. $10k - $50k, $25,000, or custom range" 
+                    value={formData.budget} 
+                    onChange={(e) => setFormData({...formData, budget: e.target.value})} 
+                  />
                 </div>
 
                 <div className="space-y-4">

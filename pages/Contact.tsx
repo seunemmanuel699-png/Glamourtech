@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, MessageSquare, Users2, Clock, Shield, CheckCircle2, ExternalLink } from 'lucide-react';
+import { triggerNotification } from '../components/NotificationSystem';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -45,6 +46,11 @@ const Contact: React.FC = () => {
 
       if (response.ok) {
         setIsSuccess(true);
+        triggerNotification(
+          'Operational Access Granted',
+          `Strategic Request for ${formData.name} was successfully registered. The secure communications pipeline is now active.`,
+          'lead'
+        );
         // Successful submission now stay on page to show the embedded scheduler
       } else {
         throw new Error("Submission failed");
@@ -222,12 +228,15 @@ const Contact: React.FC = () => {
 
                 <div className="space-y-2">
                   <label className="block text-[8px] font-black uppercase tracking-[0.4em] text-gray-500">Budget Classification</label>
-                  <select required disabled={isSubmitting} className="w-full bg-white/[0.03] border border-white/10 px-4 py-3 focus:border-brand-red outline-none transition-all text-brand-white font-medium text-sm disabled:opacity-50 appearance-none" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})}>
-                    <option value="" className="bg-brand-black">Select Tier</option>
-                    <option value="10k-50k" className="bg-brand-black">$10k - $50k</option>
-                    <option value="50k-200k" className="bg-brand-black">$50k - $200k</option>
-                    <option value="200k+" className="bg-brand-black">$200k+</option>
-                  </select>
+                  <input 
+                    required 
+                    type="text" 
+                    disabled={isSubmitting} 
+                    className="w-full bg-white/[0.03] border border-white/10 px-4 py-3 focus:border-brand-red outline-none transition-all text-brand-white font-medium text-sm disabled:opacity-50" 
+                    placeholder="e.g. $10k - $50k, $25,000, or custom range" 
+                    value={formData.budget} 
+                    onChange={(e) => setFormData({...formData, budget: e.target.value})} 
+                  />
                 </div>
 
                 <div className="space-y-2">
