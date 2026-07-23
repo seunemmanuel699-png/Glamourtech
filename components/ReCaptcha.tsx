@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShieldCheck, ShieldAlert, Cpu, Check, Loader2, Info, RefreshCw, Volume2, ArrowRight, Sparkles, CheckCircle2, RotateCcw, MoveRight, ImageOff } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, Cpu, Check, Loader2, Info, RefreshCw, Volume2, ArrowRight, Sparkles, CheckCircle2, RotateCcw, MoveRight, ImageOff, Key, Lock, Star, Hexagon, Circle, Square, Crown } from 'lucide-react';
 
 interface ReCaptchaProps {
   onVerify: (verified: boolean) => void;
@@ -29,15 +29,15 @@ const CHALLENGE_TOPICS: ChallengeTopic[] = [
     title: 'Houses & Architecture',
     instruction: 'Select all squares with a HOUSE or RESIDENCE:',
     tiles: [
-      { id: 1, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Luxury Home' },
-      { id: 2, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Car' },
-      { id: 3, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Modern Mansion' },
-      { id: 4, url: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Suburban Villa' },
-      { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Red Car' },
-      { id: 6, url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Country Estate' },
-      { id: 7, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Nature Mountain' },
-      { id: 8, url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Brick House' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Highrise Glass Tower' }
+      { id: 1, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Luxury Home' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Car' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Modern Mansion' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Suburban Villa' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Red Car' },
+      { id: 6, url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Country Estate' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Nature Mountain' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Brick House' },
+      { id: 9, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Highrise Glass Tower' }
     ]
   },
   {
@@ -45,15 +45,15 @@ const CHALLENGE_TOPICS: ChallengeTopic[] = [
     title: 'Cars & Automobiles',
     instruction: 'Select all squares with a CAR or AUTOMOBILE:',
     tiles: [
-      { id: 1, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Porsche Sports Car' },
-      { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern House' },
-      { id: 3, url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Chevrolet Corvette' },
-      { id: 4, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Skyscraper' },
-      { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Ferrari Red' },
-      { id: 6, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Luxury Villa' },
-      { id: 7, url: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Audi Sedan' },
-      { id: 8, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain Landscape' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'BMW Coupe' }
+      { id: 1, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Porsche Sports Car' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern House' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Chevrolet Corvette' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Skyscraper' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Ferrari Red' },
+      { id: 6, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Luxury Villa' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Audi Sedan' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain Landscape' },
+      { id: 9, url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'BMW Coupe' }
     ]
   },
   {
@@ -61,15 +61,15 @@ const CHALLENGE_TOPICS: ChallengeTopic[] = [
     title: 'Buses & Heavy Transport',
     instruction: 'Select all squares with BUSES or HEAVY VEHICLES:',
     tiles: [
-      { id: 1, url: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'City Bus' },
-      { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'House' },
-      { id: 3, url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Red London Bus' },
-      { id: 4, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain' },
-      { id: 5, url: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Double Decker Bus' },
-      { id: 6, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Coupe' },
-      { id: 7, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern Home' },
-      { id: 8, url: 'https://images.unsplash.com/photo-1509749837427-ac94a2553d0e?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Tourist Coach' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Tower Building' }
+      { id: 1, url: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'City Bus' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'House' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Red London Bus' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Double Decker Bus' },
+      { id: 6, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Coupe' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern Home' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1509749837427-ac94a2553d0e?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Tourist Coach' },
+      { id: 9, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Tower Building' }
     ]
   },
   {
@@ -77,15 +77,15 @@ const CHALLENGE_TOPICS: ChallengeTopic[] = [
     title: 'Bridges & Skyscrapers',
     instruction: 'Select all squares with BRIDGES or SKYSCRAPERS:',
     tiles: [
-      { id: 1, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Glass Skyscraper' },
-      { id: 2, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Car' },
-      { id: 3, url: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Golden Gate Bridge' },
-      { id: 4, url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Country Villa' },
-      { id: 5, url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'City Skyline' },
-      { id: 6, url: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Bus' },
-      { id: 7, url: 'https://images.unsplash.com/photo-1477959858617-67f30ac4ce00?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Metropolis Tower' },
-      { id: 8, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Red Ferrari' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Interior Room' }
+      { id: 1, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Glass Skyscraper' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Car' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Golden Gate Bridge' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Country Villa' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'City Skyline' },
+      { id: 6, url: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Bus' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&auto=format&fit=crop&q=80', isCorrect: true, label: 'Metropolis Tower' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Red Ferrari' },
+      { id: 9, url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern Interior' }
     ]
   }
 ];
@@ -99,6 +99,18 @@ const shuffleTiles = (tiles: GridTile[]): GridTile[] => {
   }
   return arr;
 };
+
+// Available icons for Draw/Fit challenges (over 100+ dynamic challenge combinations)
+const FIT_ICONS = [
+  { id: 'shield', name: 'Security Shield', Icon: ShieldCheck },
+  { id: 'cpu', name: 'AI Processor Core', Icon: Cpu },
+  { id: 'key', name: 'Encrypted Key', Icon: Key },
+  { id: 'lock', name: 'Biometric Lock', Icon: Lock },
+  { id: 'sparkles', name: 'Quantum Sparkle', Icon: Sparkles },
+  { id: 'star', name: 'Verification Star', Icon: Star },
+  { id: 'crown', name: 'Enterprise Crown', Icon: Crown },
+  { id: 'hexagon', name: 'Matrix Hexagon', Icon: Hexagon },
+];
 
 export const ReCaptcha: React.FC<ReCaptchaProps> = ({ 
   onVerify, 
@@ -132,14 +144,38 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [failedImageIds, setFailedImageIds] = useState<number[]>([]);
 
-  // Object Fit Slider / Alignment State
-  const [sliderPos, setSliderPos] = useState(10); // percentage 0-100
-  const [rotationAngle, setRotationAngle] = useState(45); // degrees
-  const targetSliderPos = 68; // target slot position
-  const targetRotationAngle = 0; // target exact alignment angle
+  // Dynamic Fit Challenge Generator State (supports over 100 combinations!)
+  const [fitChallengeId, setFitChallengeId] = useState(1);
+  const [targetSliderPos, setTargetSliderPos] = useState(70);
+  const [targetRotationAngle, setTargetRotationAngle] = useState(0);
+  const [fitIconIndex, setFitIconIndex] = useState(0);
+
+  const [sliderPos, setSliderPos] = useState(10);
+  const [rotationAngle, setRotationAngle] = useState(90);
   const [isFittingSuccess, setIsFittingSuccess] = useState(false);
 
   const currentTopic = CHALLENGE_TOPICS[topicIndex];
+
+  // Generate a random new Fit Challenge with different position, rotation, and icon shape
+  const generateNewFitChallenge = () => {
+    const posOptions = [25, 35, 45, 55, 65, 75, 80];
+    const rotOptions = [-135, -90, -45, 0, 45, 90, 135];
+    
+    const newTargetPos = posOptions[Math.floor(Math.random() * posOptions.length)];
+    const newTargetRot = rotOptions[Math.floor(Math.random() * rotOptions.length)];
+    const newIconIdx = Math.floor(Math.random() * FIT_ICONS.length);
+    
+    setTargetSliderPos(newTargetPos);
+    setTargetRotationAngle(newTargetRot);
+    setFitIconIndex(newIconIdx);
+    setFitChallengeId((prev) => prev + 1);
+
+    // Set non-overlapping initial user positions
+    setSliderPos(newTargetPos > 50 ? 15 : 85);
+    setRotationAngle((newTargetRot + 90) > 180 ? newTargetRot - 90 : newTargetRot + 90);
+    setErrorMessage(null);
+    setIsFittingSuccess(false);
+  };
 
   // Re-shuffle tiles whenever topicIndex changes
   useEffect(() => {
@@ -157,6 +193,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     setTimeout(() => {
       setShowChallengeModal(true);
       setIsVerifying(false);
+      generateNewFitChallenge();
     }, 400);
   };
 
@@ -203,7 +240,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     const posDiff = Math.abs(sliderPos - targetSliderPos);
     const rotDiff = Math.abs(rotationAngle - targetRotationAngle);
 
-    if (posDiff <= 4 && rotDiff <= 8) {
+    if (posDiff <= 5 && rotDiff <= 12) {
       setIsFittingSuccess(true);
       setTimeout(() => {
         setShowChallengeModal(false);
@@ -211,7 +248,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
         onVerify(true);
       }, 800);
     } else {
-      setErrorMessage('Object is not aligned cleanly into the slot target. Adjust position and rotation!');
+      setErrorMessage(`Not aligned! Rotate slider to ${targetRotationAngle}° and position slider to ${targetSliderPos}%.`);
     }
   };
 
@@ -221,13 +258,12 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     setShowChallengeModal(false);
     setSelectedTileIds([]);
     setChallengeMode('grid');
-    setSliderPos(10);
-    setRotationAngle(45);
     setIsFittingSuccess(false);
     onVerify(false);
   };
 
   const isDark = theme === 'dark';
+  const CurrentFitIcon = FIT_ICONS[fitIconIndex].Icon;
 
   return (
     <>
@@ -253,7 +289,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                   isVerified 
                     ? 'bg-green-500 border-green-500 text-white shadow-[0_0_15px_rgba(34,197,94,0.4)]' 
                     : isVerifying
-                      ? 'border-brand-red/30 bg-brand-red/5'
+                      ? 'border-[#0066FF]/30 bg-[#0066FF]/5'
                       : isDark 
                         ? 'border-white/20 hover:border-[#00D2FF] bg-black/40' 
                         : 'border-gray-300 hover:border-gray-400 bg-white'
@@ -278,7 +314,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                       exit={{ opacity: 0 }}
                       className="absolute inset-0 flex items-center justify-center"
                     >
-                      <Loader2 className="w-4 h-4 text-brand-red animate-spin" />
+                      <Loader2 className="w-4 h-4 text-[#0066FF] animate-spin" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -301,8 +337,8 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
 
           {/* reCAPTCHA Brand Logo / Badge */}
           <div className="flex flex-col items-end">
-            <div className="flex items-center gap-1.5 text-brand-red">
-              <ShieldCheck className={`w-5 h-5 ${isVerified ? 'text-green-400' : 'text-brand-red'}`} />
+            <div className="flex items-center gap-1.5 text-[#0066FF]">
+              <ShieldCheck className={`w-5 h-5 ${isVerified ? 'text-green-400' : 'text-[#0066FF]'}`} />
               <span className="text-[10px] font-black tracking-widest text-white">RECAPTCHA</span>
             </div>
             <span className="text-[8px] text-gray-500 uppercase mt-0.5 font-mono tracking-widest">Enterprise AI</span>
@@ -323,7 +359,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100000] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 selection:bg-brand-red selection:text-white"
+            className="fixed inset-0 z-[100000] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 selection:bg-[#0066FF] selection:text-white"
           >
             <motion.div 
               initial={{ scale: 0.9, y: 15 }}
@@ -332,7 +368,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
               className="w-full max-w-sm bg-[#0A0F1D] border border-white/15 rounded-lg overflow-hidden shadow-2xl relative"
             >
               {/* Header Box (Google reCAPTCHA Style Header) */}
-              <div className="bg-[#4285F4] p-4 text-white relative">
+              <div className="bg-[#0066FF] p-4 text-white relative">
                 <span className="text-[10px] uppercase font-mono tracking-widest font-bold text-white/80 block mb-1">
                   reCAPTCHA v3 Interactive Challenge
                 </span>
@@ -352,7 +388,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                       Rotate & Slide Object to Fit Slot
                     </h3>
                     <p className="text-xs text-white/90 mt-1 font-medium">
-                      Drag slider & rotation dial until object snaps into missing target contour.
+                      Challenge #{fitChallengeId}: Match target angle ({targetRotationAngle}°) & position ({targetSliderPos}%).
                     </p>
                   </>
                 )}
@@ -370,7 +406,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                 <button
                   onClick={() => setChallengeMode('grid')}
                   className={`flex-1 py-2 text-center transition-colors border-r border-white/10 ${
-                    challengeMode === 'grid' ? 'bg-[#4285F4]/20 text-[#4285F4] font-bold' : 'text-gray-400 hover:text-white'
+                    challengeMode === 'grid' ? 'bg-[#0066FF]/20 text-[#00D2FF] font-bold' : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   1. Image Grid ({currentTopic.title})
@@ -378,10 +414,10 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                 <button
                   onClick={() => setChallengeMode('fit')}
                   className={`flex-1 py-2 text-center transition-colors ${
-                    challengeMode === 'fit' ? 'bg-[#4285F4]/20 text-[#4285F4] font-bold' : 'text-gray-400 hover:text-white'
+                    challengeMode === 'fit' ? 'bg-[#0066FF]/20 text-[#00D2FF] font-bold' : 'text-gray-400 hover:text-white'
                   }`}
                 >
-                  2. Draw / Fit Shape
+                  2. Draw / Fit Shape (#{fitChallengeId})
                 </button>
               </div>
 
@@ -391,7 +427,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                   <motion.div 
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-3 p-2.5 bg-red-500/10 border border-red-500/30 rounded text-red-400 text-xs font-mono text-center font-bold"
+                    className="mb-3 p-2.5 bg-[#0066FF]/20 border border-[#00D2FF]/40 rounded text-[#00D2FF] text-xs font-mono text-center font-bold"
                   >
                     {errorMessage}
                   </motion.div>
@@ -409,7 +445,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                             key={tile.id}
                             onClick={() => handleTileClick(tile.id)}
                             className={`relative cursor-pointer overflow-hidden rounded transition-all duration-200 group bg-slate-900 ${
-                              isSelected ? 'ring-4 ring-[#4285F4] scale-[0.96]' : 'hover:opacity-90'
+                              isSelected ? 'ring-4 ring-[#0066FF] scale-[0.96]' : 'hover:opacity-90'
                             }`}
                           >
                             {!isImageFailed ? (
@@ -429,8 +465,8 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                             )}
 
                             {isSelected && (
-                              <div className="absolute inset-0 bg-[#4285F4]/40 flex items-center justify-center">
-                                <div className="w-7 h-7 rounded-full bg-[#4285F4] text-white flex items-center justify-center shadow-lg">
+                              <div className="absolute inset-0 bg-[#0066FF]/40 flex items-center justify-center">
+                                <div className="w-7 h-7 rounded-full bg-[#0066FF] text-white flex items-center justify-center shadow-lg">
                                   <Check className="w-4 h-4 stroke-[3]" />
                                 </div>
                               </div>
@@ -444,10 +480,10 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={rotateTopic}
-                          title="Rotate Challenge Topic (Cars -> Houses -> Buses)"
+                          title="Rotate Challenge Topic (Houses -> Cars -> Buses -> Skyscrapers)"
                           className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-gray-300 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-colors"
                         >
-                          <RefreshCw className="w-3.5 h-3.5 text-[#4285F4]" />
+                          <RefreshCw className="w-3.5 h-3.5 text-[#00D2FF]" />
                           <span>Rotate</span>
                         </button>
                       </div>
@@ -457,7 +493,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                         disabled={selectedTileIds.length === 0}
                         className={`px-6 py-2.5 rounded font-black text-xs uppercase tracking-widest transition-all ${
                           selectedTileIds.length > 0
-                            ? 'bg-[#4285F4] hover:bg-blue-600 text-white shadow-lg shadow-[#4285F4]/30'
+                            ? 'bg-[#0066FF] hover:bg-[#0052D4] text-white shadow-lg shadow-[#0066FF]/30'
                             : 'bg-white/10 text-gray-500 cursor-not-allowed'
                         }`}
                       >
@@ -477,17 +513,17 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
 
                       {/* Target Missing Cutout Slot (Dashed Outline) */}
                       <div 
-                        className="absolute w-20 h-20 border-2 border-dashed border-[#4285F4] bg-[#4285F4]/10 rounded-lg flex items-center justify-center"
-                        style={{ left: `${targetSliderPos}%`, transform: 'translateX(-50%)' }}
+                        className="absolute w-20 h-20 border-2 border-dashed border-[#00D2FF] bg-[#0066FF]/15 rounded-lg flex items-center justify-center transition-all duration-300"
+                        style={{ left: `${targetSliderPos}%`, transform: `translateX(-50%) rotate(${targetRotationAngle}deg)` }}
                       >
-                        <span className="text-[9px] font-mono text-[#4285F4] uppercase font-bold tracking-widest">
-                          TARGET SLOT
+                        <span className="text-[9px] font-mono text-[#00D2FF] uppercase font-bold tracking-widest text-center px-1">
+                          TARGET
                         </span>
                       </div>
 
                       {/* Draggable/Rotatable Object Shape */}
                       <motion.div 
-                        className={`absolute w-20 h-20 bg-gradient-to-tr from-brand-red to-orange-500 rounded-lg shadow-xl border border-white/20 flex flex-col items-center justify-center transition-all ${
+                        className={`absolute w-20 h-20 bg-gradient-to-tr from-[#0066FF] to-[#00D2FF] rounded-lg shadow-xl border border-white/30 flex flex-col items-center justify-center transition-all ${
                           isFittingSuccess ? 'bg-green-500 border-green-400 shadow-[0_0_25px_rgba(34,197,94,0.6)]' : ''
                         }`}
                         style={{ 
@@ -495,7 +531,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                           transform: `translateX(-50%) rotate(${rotationAngle}deg)` 
                         }}
                       >
-                        <ShieldCheck className="w-8 h-8 text-white" />
+                        <CurrentFitIcon className="w-8 h-8 text-white" />
                         <span className="text-[8px] font-mono font-bold text-white uppercase mt-1">FIT ME</span>
                       </motion.div>
                     </div>
@@ -504,7 +540,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                     <div className="space-y-1">
                       <div className="flex justify-between text-[10px] font-mono text-gray-400">
                         <span>Slide Position</span>
-                        <span className="text-[#4285F4] font-bold">{Math.round(sliderPos)}%</span>
+                        <span className="text-[#00D2FF] font-bold">{Math.round(sliderPos)}%</span>
                       </div>
                       <input 
                         type="range" 
@@ -515,7 +551,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                           setSliderPos(Number(e.target.value));
                           setErrorMessage(null);
                         }}
-                        className="w-full accent-[#4285F4] cursor-pointer"
+                        className="w-full accent-[#0066FF] cursor-pointer"
                       />
                     </div>
 
@@ -523,7 +559,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                     <div className="space-y-1">
                       <div className="flex justify-between text-[10px] font-mono text-gray-400">
                         <span>Rotate Angle</span>
-                        <span className="text-brand-red font-bold">{rotationAngle}°</span>
+                        <span className="text-[#00D2FF] font-bold">{rotationAngle}°</span>
                       </div>
                       <input 
                         type="range" 
@@ -534,25 +570,23 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                           setRotationAngle(Number(e.target.value));
                           setErrorMessage(null);
                         }}
-                        className="w-full accent-brand-red cursor-pointer"
+                        className="w-full accent-[#0066FF] cursor-pointer"
                       />
                     </div>
 
-                    <div className="pt-2 flex items-center justify-between">
+                    <div className="pt-2 flex items-center justify-between gap-2">
                       <button
-                        onClick={() => {
-                          setSliderPos(10);
-                          setRotationAngle(45);
-                        }}
-                        className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded text-xs font-mono flex items-center gap-1"
+                        onClick={generateNewFitChallenge}
+                        className="p-2 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded text-xs font-mono flex items-center gap-1.5 transition-colors border border-white/10"
+                        title="Generate a new randomized puzzle challenge"
                       >
-                        <RotateCcw className="w-3.5 h-3.5" />
-                        Reset
+                        <RefreshCw className="w-3.5 h-3.5 text-[#00D2FF]" />
+                        <span>New Challenge</span>
                       </button>
 
                       <button
                         onClick={verifyFitChallenge}
-                        className="px-6 py-2.5 bg-[#4285F4] hover:bg-blue-600 text-white rounded font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-[#4285F4]/30"
+                        className="px-6 py-2.5 bg-[#0066FF] hover:bg-[#0052D4] text-white rounded font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-[#0066FF]/30"
                       >
                         VERIFY ACCESS
                       </button>
@@ -564,7 +598,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
               {/* Modal Footer */}
               <div className="bg-black/60 p-3 border-t border-white/10 flex items-center justify-between text-[9px] font-mono text-gray-500">
                 <span>Google reCAPTCHA Enterprise</span>
-                <span className="text-[#4285F4]">SECURITY RATING: HIGH</span>
+                <span className="text-[#00D2FF]">SECURITY RATING: HIGH</span>
               </div>
             </motion.div>
           </motion.div>
@@ -573,4 +607,5 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     </>
   );
 };
+
 

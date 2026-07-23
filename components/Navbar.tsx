@@ -41,8 +41,8 @@ const Navbar: React.FC = () => {
             <div key={link.path} className="relative group flex items-center">
               <Link
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-brand-red py-2 ${
-                  isActive(link.path) ? 'text-brand-red' : 'text-gray-400'
+                className={`text-sm font-medium transition-colors hover:text-[#00D2FF] py-2 ${
+                  isActive(link.path) ? 'text-[#00D2FF] font-bold' : 'text-gray-400'
                 }`}
               >
                 {link.name}
@@ -62,12 +62,12 @@ const Navbar: React.FC = () => {
           <div className="relative group flex items-center">
             <Link
               to="/contact"
-              className="bg-brand-red text-white px-6 py-2.5 rounded-sm font-bold text-sm hover:bg-red-700 transition-all uppercase tracking-wider shadow-lg shadow-brand-red/10"
+              className="bg-[#0066FF] text-white px-6 py-2.5 rounded-sm font-bold text-sm hover:bg-[#0052D4] transition-all uppercase tracking-wider shadow-lg shadow-[#0066FF]/20"
             >
               Book Strategy Call
             </Link>
             {/* Tooltip for CTA */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-brand-black border border-white/10 rounded-sm text-[10px] text-brand-red font-bold uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-2xl z-[60]">
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-brand-black border border-white/10 rounded-sm text-[10px] text-[#00D2FF] font-bold uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-2xl z-[60]">
               Schedule Systems Audit
               <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-brand-black border-t border-l border-white/10 rotate-45"></div>
             </div>
@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
             <div key={link.path}>
               <Link
                 to={link.path}
-                className={`text-lg font-medium ${isActive(link.path) ? 'text-brand-red' : 'text-white'}`}
+                className={`text-lg font-medium ${isActive(link.path) ? 'text-[#00D2FF]' : 'text-white'}`}
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
           ))}
           <Link
             to="/contact"
-            className="bg-brand-red text-white px-6 py-3 rounded-sm font-bold text-center uppercase tracking-widest"
+            className="bg-[#0066FF] text-white px-6 py-3 rounded-sm font-bold text-center uppercase tracking-widest"
             onClick={() => setIsOpen(false)}
           >
             Book Strategy Call

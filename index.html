@@ -20,8 +20,7 @@
     <!-- Resolve 'google is not defined' error if external scripts or extensions look for it early -->
     <script>window.google = window.google || {};</script>
 
-    <!-- Google reCAPTCHA v3 script -->
-    <script src="https://www.google.com/recaptcha/api.js?render=6LdfXN8UAAAAAN977Aet8vZ6K8S2V4v3_S0_7G9H"></script>
+    <!-- Google reCAPTCHA Integration -->
 
     <!-- Preload Critical Assets for Speed -->
     <link rel="preload" as="video" href="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/introductory%20video%20and%20work%20showcase/welcome%20video.mp4" type="video/mp4">
@@ -40,7 +39,9 @@
               brand: {
                 black: '#0B0B0B',
                 white: '#FFFFFF',
-                red: '#D72638',
+                blue: '#0066FF',
+                'blue-accent': '#00D2FF',
+                red: '#0066FF', // Fallback redirect to blue
               }
             },
             fontFamily: {
@@ -73,7 +74,7 @@
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #D72638;
+        background: #0066FF;
       }
     </style>
   <script type="importmap">

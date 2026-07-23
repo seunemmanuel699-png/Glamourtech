@@ -159,7 +159,7 @@ const Chatbot: React.FC = () => {
       {/* FAB - Fixed Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-all duration-300 transform active:scale-95 border border-white/10 z-50 relative"
+        className="w-16 h-16 bg-[#0066FF] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-all duration-300 transform active:scale-95 border border-white/10 z-50 relative"
       >
         {isOpen ? (
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,12 +176,12 @@ const Chatbot: React.FC = () => {
       {isOpen && (
         <div className="absolute bottom-20 right-0 w-[360px] md:w-[420px] h-[600px] max-h-[80vh] bg-brand-black border border-white/10 rounded-sm shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
           
-          <div className="bg-brand-red p-5 flex items-center justify-between shadow-lg">
+          <div className="bg-[#0066FF] p-5 flex items-center justify-between shadow-lg">
             <div>
               <h3 className="text-white font-bold heading-font text-sm uppercase tracking-widest">Automation Hub</h3>
-              <p className="text-white/60 text-[10px] uppercase font-bold tracking-tighter">Powered by Make.com</p>
+              <p className="text-white/80 text-[10px] uppercase font-bold tracking-tighter">Powered by Make.com</p>
             </div>
-            <button onClick={clearHistory} className="text-white/40 hover:text-white transition-colors">
+            <button onClick={clearHistory} className="text-white/60 hover:text-white transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
@@ -193,7 +193,7 @@ const Chatbot: React.FC = () => {
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[90%] p-4 text-sm leading-relaxed rounded-sm ${
                   m.role === 'user' 
-                    ? 'bg-brand-red text-white border border-brand-red/20 shadow-lg' 
+                    ? 'bg-[#0066FF] text-white border border-[#0066FF]/20 shadow-lg' 
                     : 'bg-white/5 text-gray-200 border border-white/10'
                 }`}>
                   {m.text}
@@ -204,9 +204,9 @@ const Chatbot: React.FC = () => {
             {isLoading && (
               <div className="flex justify-start">
                 <div className="bg-white/5 p-4 rounded-sm border border-white/10 flex space-x-2">
-                  <div className="w-1.5 h-1.5 bg-brand-red rounded-full animate-bounce"></div>
-                  <div className="w-1.5 h-1.5 bg-brand-red rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                  <div className="w-1.5 h-1.5 bg-brand-red rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="w-1.5 h-1.5 bg-[#00D2FF] rounded-full animate-bounce"></div>
+                  <div className="w-1.5 h-1.5 bg-[#00D2FF] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="w-1.5 h-1.5 bg-[#00D2FF] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
                 </div>
               </div>
             )}
@@ -217,7 +217,7 @@ const Chatbot: React.FC = () => {
             <div className="flex space-x-2">
               <button
                 onClick={toggleListening}
-                className={`p-3 border ${isListening ? 'bg-brand-red border-brand-red text-white' : 'bg-white/5 border-white/10 text-gray-500'}`}
+                className={`p-3 border ${isListening ? 'bg-[#0066FF] border-[#0066FF] text-white' : 'bg-white/5 border-white/10 text-gray-400 hover:text-white'}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
@@ -226,7 +226,7 @@ const Chatbot: React.FC = () => {
               
               <input
                 type="text"
-                className="flex-grow bg-white/5 border border-white/10 px-4 py-3 text-sm text-white focus:border-brand-red outline-none"
+                className="flex-grow bg-white/5 border border-white/10 px-4 py-3 text-sm text-white focus:border-[#00D2FF] outline-none"
                 placeholder={isListening ? "Listening..." : "Type your message..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -236,7 +236,7 @@ const Chatbot: React.FC = () => {
               <button
                 onClick={() => handleSend()}
                 disabled={isLoading}
-                className="bg-brand-red text-white px-5 py-3 hover:bg-red-700 disabled:opacity-50"
+                className="bg-[#0066FF] text-white px-5 py-3 hover:bg-[#0052D4] disabled:opacity-50 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

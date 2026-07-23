@@ -87,27 +87,27 @@ const Footer: React.FC = () => {
             {/* Direct Contact Info & ORCID Widget */}
             <div className="space-y-6">
               <div className="flex flex-col">
-                <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] mb-1">WhatsApp / Direct</span>
+                <span className="text-[#00D2FF] font-black text-[9px] uppercase tracking-[0.4em] mb-1">WhatsApp / Direct</span>
                 <a 
                   href="https://wa.me/2348145157702" 
-                  className="text-white hover:text-brand-red transition-colors font-bold text-lg tracking-tight"
+                  className="text-white hover:text-[#00D2FF] transition-colors font-bold text-lg tracking-tight"
                 >
                   +234 8145157702
                 </a>
               </div>
               
               <div className="flex flex-col">
-                <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] mb-1">Official Transmission</span>
+                <span className="text-[#00D2FF] font-black text-[9px] uppercase tracking-[0.4em] mb-1">Official Transmission</span>
                 <a 
                   href="mailto:glamourtechsolution@gmail.com" 
-                  className="text-white hover:text-brand-red transition-colors font-bold text-lg tracking-tight"
+                  className="text-white hover:text-[#00D2FF] transition-colors font-bold text-lg tracking-tight"
                 >
                   glamourtechsolution@gmail.com
                 </a>
               </div>
 
               <div className="flex flex-col">
-                <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] mb-1">ORCID Researcher Record</span>
+                <span className="text-[#00D2FF] font-black text-[9px] uppercase tracking-[0.4em] mb-1">ORCID Researcher Record</span>
                 <a
                   id="cy-effective-orcid-url"
                   className="underline text-gray-300 hover:text-[#A6CE39] transition-colors text-sm font-mono flex items-center gap-1.5"
@@ -129,7 +129,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-brand-red">Company</h4>
+          <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-[#00D2FF]">Company</h4>
           <ul className="space-y-4 text-gray-400">
             <li><Link to="/work" className="hover:text-white transition-colors">Work Showcase</Link></li>
             <li><Link to="/solutions" className="hover:text-white transition-colors">Solutions</Link></li>
@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-brand-red">Legal</h4>
+          <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-[#00D2FF]">Legal</h4>
           <ul className="space-y-4 text-gray-400">
             <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
             <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
@@ -153,7 +153,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto mt-16 pt-10 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
           <div>
-            <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] block mb-1">
+            <span className="text-[#00D2FF] font-black text-[9px] uppercase tracking-[0.4em] block mb-1">
               Enterprise Governance
             </span>
             <h5 className="text-white font-black uppercase tracking-tight text-lg">
@@ -167,8 +167,8 @@ const Footer: React.FC = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {/* SOC 2 Type II Badge */}
-          <div className="p-4 bg-white/[0.02] border border-white/10 rounded flex items-center gap-3 hover:border-brand-red/40 transition-colors group">
-            <div className="p-2 bg-brand-red/10 text-brand-red rounded group-hover:scale-110 transition-transform">
+          <div className="p-4 bg-white/[0.02] border border-white/10 rounded flex items-center gap-3 hover:border-[#0066FF]/40 transition-colors group">
+            <div className="p-2 bg-[#0066FF]/10 text-[#00D2FF] rounded group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
