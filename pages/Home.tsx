@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { ShieldCheck, Award, CheckCircle2, ExternalLink, Cpu, Lock } from 'lucide-react';
 import { triggerNotification } from '../components/NotificationSystem';
 import { ReCaptcha } from '../components/ReCaptcha';
 import { saveSubmission } from '../firebase';
@@ -254,6 +255,124 @@ const Home: React.FC = () => {
               <p className="text-gray-400 uppercase tracking-[0.3em] text-xs font-black">{m.label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Trust & Certifications Section */}
+      <section className="py-24 px-6 bg-gradient-to-b from-[#050B14] to-brand-black border-t border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#A6CE39]/5 rounded-full blur-[140px] pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[#A6CE39] font-black tracking-[0.6em] uppercase text-xs mb-4 flex items-center justify-center gap-2">
+              <Award className="w-4 h-4 text-[#A6CE39]" />
+              Peer-Verified Integrity & Accreditation
+            </span>
+            <h2 className="text-5xl md:text-7xl font-black heading-font uppercase tracking-tighter text-white">
+              Trust & <span className="text-[#A6CE39]">Certifications</span>
+            </h2>
+            <p className="text-gray-400 text-xl font-medium mt-6 leading-relaxed">
+              Engineered with research-backed AI architectures, verified persistent researcher credentials, and enterprise security compliance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: ORCID iD Academic & Research Certification */}
+            <div className="bg-white/[0.02] border border-[#A6CE39]/30 hover:border-[#A6CE39] p-8 rounded-sm transition-all duration-300 relative group flex flex-col justify-between shadow-2xl">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#A6CE39]/10 rounded-bl-full pointer-events-none transition-all group-hover:bg-[#A6CE39]/20" />
+              <div>
+                <div className="w-14 h-14 bg-[#A6CE39]/10 border border-[#A6CE39]/40 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(166,206,57,0.2)]">
+                  <img 
+                    src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+                    alt="ORCID iD icon" 
+                    className="w-7 h-7 object-contain" 
+                  />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#A6CE39] block mb-2">
+                  Academic & Researcher ID
+                </span>
+                <h3 className="text-2xl font-black uppercase text-white tracking-tight mb-4">
+                  ORCID Persistent Researcher Record
+                </h3>
+                <p className="text-gray-400 text-sm font-medium leading-relaxed mb-6">
+                  Guarantees research integrity, academic output attribution, and verified engineering contributions under a persistent global researcher key.
+                </p>
+              </div>
+
+              {/* Exact ORCID Widget Link requested by user */}
+              <div className="pt-4 border-t border-white/10">
+                <a
+                  id="cy-effective-orcid-url"
+                  className="underline text-brand-white hover:text-[#A6CE39] transition-colors font-mono text-xs font-bold inline-flex items-center gap-1.5 break-all"
+                  href="https://orcid.org/0009-0003-0287-3454"
+                  target="orcid.widget"
+                  rel="me noopener noreferrer"
+                  style={{ verticalAlign: 'top' }}
+                >
+                  <img
+                    src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
+                    style={{ width: '1em', marginInlineStart: '0.5em' }}
+                    alt="ORCID iD icon"
+                  />
+                  https://orcid.org/0009-0003-0287-3454
+                </a>
+              </div>
+            </div>
+
+            {/* Card 2: Google reCAPTCHA v3 Protection */}
+            <div className="bg-white/[0.02] border border-white/10 hover:border-brand-red/50 p-8 rounded-sm transition-all duration-300 relative group flex flex-col justify-between shadow-2xl">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 rounded-bl-full pointer-events-none transition-all group-hover:bg-brand-red/20" />
+              <div>
+                <div className="w-14 h-14 bg-brand-red/10 border border-brand-red/40 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(255,0,51,0.2)]">
+                  <ShieldCheck className="w-7 h-7 text-brand-red" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-red block mb-2">
+                  Bot Defense & Biometrics
+                </span>
+                <h3 className="text-2xl font-black uppercase text-white tracking-tight mb-4">
+                  Google reCAPTCHA v3 Integration
+                </h3>
+                <p className="text-gray-400 text-sm font-medium leading-relaxed mb-6">
+                  Protected with non-intrusive risk scoring and adaptive neural gate authentication at entry and form submission checkpoints.
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-gray-400">
+                <span className="flex items-center gap-1 text-green-400 font-bold">
+                  <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  KEY ACTIVE
+                </span>
+                <span className="text-gray-500">v3 RISK SCORE: 0.9</span>
+              </div>
+            </div>
+
+            {/* Card 3: Research-Backed AI Architecture */}
+            <div className="bg-white/[0.02] border border-white/10 hover:border-[#00D2FF]/50 p-8 rounded-sm transition-all duration-300 relative group flex flex-col justify-between shadow-2xl">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#00D2FF]/10 rounded-bl-full pointer-events-none transition-all group-hover:bg-[#00D2FF]/20" />
+              <div>
+                <div className="w-14 h-14 bg-[#00D2FF]/10 border border-[#00D2FF]/40 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(0,210,255,0.2)]">
+                  <Cpu className="w-7 h-7 text-[#00D2FF]" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00D2FF] block mb-2">
+                  AI Architecture
+                </span>
+                <h3 className="text-2xl font-black uppercase text-white tracking-tight mb-4">
+                  Research-Driven AI Models
+                </h3>
+                <p className="text-gray-400 text-sm font-medium leading-relaxed mb-6">
+                  Leveraging modern generative AI frameworks, multi-modal reasoning, and robust real-time automation pipelines.
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-gray-400">
+                <span className="flex items-center gap-1 text-[#00D2FF] font-bold">
+                  <Lock className="w-4 h-4 text-[#00D2FF]" />
+                  GEMINI 1.5 PRO
+                </span>
+                <span className="text-gray-500">ENTERPRISE SLA</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
