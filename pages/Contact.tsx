@@ -195,6 +195,35 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {/* ORCID iD Card */}
+              <div className="p-5 border border-white/5 bg-white/[0.02] hover:bg-white/5 transition-all group rounded-sm sm:col-span-2">
+                <div className="flex items-center gap-4">
+                  <img 
+                    src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+                    alt="ORCID iD icon" 
+                    className="w-5 h-5 object-contain flex-shrink-0 group-hover:scale-110 transition-transform" 
+                  />
+                  <div>
+                    <h4 className="font-black text-brand-white uppercase tracking-widest text-[8px] mb-1 text-gray-500">Researcher Verification</h4>
+                    <a 
+                      id="cy-effective-orcid-url" 
+                      className="underline text-brand-white font-mono text-xs hover:text-[#A6CE39] transition-colors block" 
+                      href="https://orcid.org/0009-0003-0287-3454" 
+                      target="orcid.widget" 
+                      rel="me noopener noreferrer" 
+                      style={{ verticalAlign: 'top' }}
+                    >
+                      <img 
+                        src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+                        style={{ width: '1em', marginInlineStart: '0.5em', display: 'inline' }} 
+                        alt="ORCID iD icon" 
+                      />
+                      https://orcid.org/0009-0003-0287-3454
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -363,6 +392,115 @@ const Contact: React.FC = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-white/20"></span> GLOBAL TIME SYNC
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ORCID iD Researcher Gateway Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        id="orcid-section" 
+        className="mt-20 pt-20 border-t border-white/5"
+      >
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12">
+          <span className="text-[#A6CE39] font-black tracking-[0.6em] uppercase text-[9px] mb-4 flex items-center gap-2">
+            <img 
+              src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+              alt="ORCID iD icon" 
+              className="w-4 h-4 object-contain" 
+            />
+            Verified Academic & Researcher Record
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black heading-font uppercase tracking-tighter mb-6">
+            ORCID <span className="text-[#A6CE39]">Researcher</span> iD
+          </h2>
+          <p className="text-gray-400 text-lg leading-relaxed font-medium">
+            Persistent digital identifier connecting scholarly work, research outputs, and verified engineering credentials.
+          </p>
+        </div>
+
+        <div className="bg-white/[0.02] border border-white/10 p-6 md:p-12 rounded-sm relative group max-w-4xl mx-auto">
+          <div className="absolute inset-0 bg-[#A6CE39]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+          
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-brand-black/80 border border-[#A6CE39]/30 p-8 rounded-md shadow-2xl backdrop-blur-md">
+            
+            {/* Logo & ID Visual Column */}
+            <div className="md:col-span-4 flex flex-col items-center justify-center p-6 bg-white/[0.03] border border-white/5 rounded-sm text-center">
+              <div className="w-20 h-20 bg-[#A6CE39]/10 border border-[#A6CE39]/40 rounded-full flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(166,206,57,0.2)]">
+                <img 
+                  src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+                  alt="ORCID iD icon" 
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#A6CE39] mb-1">
+                Verified Record
+              </span>
+              <span className="text-xs font-mono text-gray-300 font-bold">
+                0009-0003-0287-3454
+              </span>
+            </div>
+
+            {/* Details & Live Link Column */}
+            <div className="md:col-span-8 space-y-5">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div>
+                  <h3 className="text-xl font-black text-white uppercase tracking-tight">
+                    Official ORCID iD Widget
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Connecting research activities and publications to a persistent global identifier.
+                  </p>
+                </div>
+                <span className="bg-[#A6CE39]/20 text-[#A6CE39] border border-[#A6CE39]/30 px-3 py-1 rounded text-[9px] font-mono font-bold uppercase tracking-wider">
+                  Active
+                </span>
+              </div>
+
+              {/* Exact user-requested ORCID widget anchor element */}
+              <div className="p-4 bg-black/60 border border-white/10 rounded font-mono text-sm text-gray-200 break-all flex items-center gap-2">
+                <a
+                  id="cy-effective-orcid-url"
+                  className="underline text-brand-white hover:text-[#A6CE39] transition-colors flex items-center gap-1.5 font-bold"
+                  href="https://orcid.org/0009-0003-0287-3454"
+                  target="orcid.widget"
+                  rel="me noopener noreferrer"
+                  style={{ verticalAlign: 'top' }}
+                >
+                  <img
+                    src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
+                    style={{ width: '1em', marginInlineStart: '0.5em' }}
+                    alt="ORCID iD icon"
+                  />
+                  https://orcid.org/0009-0003-0287-3454
+                </a>
+              </div>
+
+              <div className="flex flex-wrap gap-4 pt-2">
+                <a 
+                  href="https://orcid.org/0009-0003-0287-3454"
+                  target="orcid.widget"
+                  rel="me noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#A6CE39] text-black px-6 py-3 rounded-sm font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-lg shadow-[#A6CE39]/20 active:scale-95"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  View Full ORCID Record
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-10 text-[9px] font-black uppercase tracking-[0.4em] text-gray-500">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-[#A6CE39] animate-pulse"></span> ORCID REGISTRY SYNCED
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-white/20"></span> DIGITAL PERSISTENT ID
             </div>
           </div>
         </div>

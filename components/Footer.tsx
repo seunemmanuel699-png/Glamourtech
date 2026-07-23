@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
           
           {/* Social & Contact Section */}
           <div className="flex flex-col items-start space-y-8">
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-6 flex-wrap gap-y-4">
               {/* Upwork Profile */}
               <a 
                 href="https://www.upwork.com/freelancers/~0161750daa781bfcb5?mp_source=share" 
@@ -62,9 +62,28 @@ const Footer: React.FC = () => {
                 </div>
                 <span className="text-gray-400 group-hover:text-white transition-colors font-black uppercase text-[10px] tracking-[0.4em]">YouTube</span>
               </a>
+
+              {/* ORCID iD Badge */}
+              <a 
+                id="cy-effective-orcid-url"
+                href="https://orcid.org/0009-0003-0287-3454" 
+                target="orcid.widget" 
+                rel="me noopener noreferrer" 
+                className="group flex flex-col items-center transition-all text-center"
+                style={{ verticalAlign: 'top' }}
+              >
+                <div className="w-12 h-12 mb-2 p-2 bg-white/5 rounded-full group-hover:scale-110 transition-transform duration-300 flex items-center justify-center overflow-hidden shadow-lg shadow-white/5 border border-white/10 group-hover:border-[#A6CE39]">
+                  <img 
+                    src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+                    alt="ORCID iD icon" 
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <span className="text-gray-400 group-hover:text-white transition-colors font-black uppercase text-[10px] tracking-[0.4em]">ORCID</span>
+              </a>
             </div>
 
-            {/* Direct Contact Info */}
+            {/* Direct Contact Info & ORCID Widget */}
             <div className="space-y-6">
               <div className="flex flex-col">
                 <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] mb-1">WhatsApp / Direct</span>
@@ -83,6 +102,25 @@ const Footer: React.FC = () => {
                   className="text-white hover:text-brand-red transition-colors font-bold text-lg tracking-tight"
                 >
                   glamourtechsolution@gmail.com
+                </a>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] mb-1">ORCID Researcher Record</span>
+                <a
+                  id="cy-effective-orcid-url"
+                  className="underline text-gray-300 hover:text-[#A6CE39] transition-colors text-sm font-mono flex items-center gap-1.5"
+                  href="https://orcid.org/0009-0003-0287-3454"
+                  target="orcid.widget"
+                  rel="me noopener noreferrer"
+                  style={{ verticalAlign: 'top' }}
+                >
+                  <img
+                    src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
+                    style={{ width: '1em', marginInlineStart: '0.5em' }}
+                    alt="ORCID iD icon"
+                  />
+                  https://orcid.org/0009-0003-0287-3454
                 </a>
               </div>
             </div>
