@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ShieldCheck, Lock, Award, FileCheck, CheckCircle2 } from 'lucide-react';
 import { Logo } from './Logo';
 
 const Footer: React.FC = () => {
@@ -147,7 +148,81 @@ const Footer: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 text-gray-500 text-xs flex flex-col md:flex-row justify-between items-center">
+
+      {/* Security & Compliance Section */}
+      <div className="max-w-7xl mx-auto mt-16 pt-10 border-t border-white/10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+          <div>
+            <span className="text-brand-red font-black text-[9px] uppercase tracking-[0.4em] block mb-1">
+              Enterprise Governance
+            </span>
+            <h5 className="text-white font-black uppercase tracking-tight text-lg">
+              Security & Compliance Standards
+            </h5>
+          </div>
+          <span className="text-xs text-gray-400 max-w-md text-left md:text-right font-medium">
+            Adhering to strict international data privacy, encryption standards, and peer-reviewed AI safety frameworks.
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {/* SOC 2 Type II Badge */}
+          <div className="p-4 bg-white/[0.02] border border-white/10 rounded flex items-center gap-3 hover:border-brand-red/40 transition-colors group">
+            <div className="p-2 bg-brand-red/10 text-brand-red rounded group-hover:scale-110 transition-transform">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs font-black text-white uppercase tracking-wider">SOC 2 Type II</div>
+              <div className="text-[9px] text-gray-500 font-mono">Audited Controls</div>
+            </div>
+          </div>
+
+          {/* GDPR Compliant Badge */}
+          <div className="p-4 bg-white/[0.02] border border-white/10 rounded flex items-center gap-3 hover:border-[#00D2FF]/40 transition-colors group">
+            <div className="p-2 bg-[#00D2FF]/10 text-[#00D2FF] rounded group-hover:scale-110 transition-transform">
+              <Lock className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs font-black text-white uppercase tracking-wider">GDPR Compliant</div>
+              <div className="text-[9px] text-gray-500 font-mono">Data Sovereignty</div>
+            </div>
+          </div>
+
+          {/* ISO 27001 Badge */}
+          <div className="p-4 bg-white/[0.02] border border-white/10 rounded flex items-center gap-3 hover:border-green-500/40 transition-colors group">
+            <div className="p-2 bg-green-500/10 text-green-400 rounded group-hover:scale-110 transition-transform">
+              <Award className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs font-black text-white uppercase tracking-wider">ISO 27001</div>
+              <div className="text-[9px] text-gray-500 font-mono">InfoSec Standard</div>
+            </div>
+          </div>
+
+          {/* ORCID Academic Record Badge */}
+          <a 
+            id="cy-effective-orcid-url"
+            href="https://orcid.org/0009-0003-0287-3454"
+            target="orcid.widget"
+            rel="me noopener noreferrer"
+            className="p-4 bg-white/[0.02] border border-white/10 rounded flex items-center gap-3 hover:border-[#A6CE39]/40 transition-colors group"
+          >
+            <div className="p-2 bg-[#A6CE39]/10 text-[#A6CE39] rounded group-hover:scale-110 transition-transform">
+              <img 
+                src="https://orcid.org/sites/default/files/images/orcid_16x16.png" 
+                alt="ORCID iD icon" 
+                className="w-5 h-5 object-contain" 
+              />
+            </div>
+            <div>
+              <div className="text-xs font-black text-white uppercase tracking-wider">ORCID Verified</div>
+              <div className="text-[9px] text-gray-500 font-mono">Academic Record</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 text-gray-500 text-xs flex flex-col md:flex-row justify-between items-center">
         <p>&copy; {new Date().getFullYear()} Glamourtech. All rights reserved.</p>
         <p className="mt-4 md:mt-0 italic">Precise. Authoritative. Technical.</p>
       </div>
