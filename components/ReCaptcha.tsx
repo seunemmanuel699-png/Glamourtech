@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShieldCheck, ShieldAlert, Cpu, Check, Loader2, Info, RefreshCw, Volume2, ArrowRight, Sparkles, CheckCircle2, RotateCcw, MoveRight } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, Cpu, Check, Loader2, Info, RefreshCw, Volume2, ArrowRight, Sparkles, CheckCircle2, RotateCcw, MoveRight, ImageOff } from 'lucide-react';
 
 interface ReCaptchaProps {
   onVerify: (verified: boolean) => void;
@@ -8,7 +8,7 @@ interface ReCaptchaProps {
   size?: 'normal' | 'compact';
 }
 
-// Preset Rotating Grid Challenge Topics with Unsplash HD images
+// Preset Rotating Grid Challenge Topics with HD verified Unsplash images
 interface GridTile {
   id: number;
   url: string;
@@ -25,22 +25,6 @@ interface ChallengeTopic {
 
 const CHALLENGE_TOPICS: ChallengeTopic[] = [
   {
-    id: 'cars',
-    title: 'Cars & Automobiles',
-    instruction: 'Select all squares with a CAR or AUTOMOBILE:',
-    tiles: [
-      { id: 1, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Porsche Sports Car' },
-      { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern House' },
-      { id: 3, url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Chevrolet Corvette' },
-      { id: 4, url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Skyscraper' },
-      { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Ferrari Red' },
-      { id: 6, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Luxury Villa' },
-      { id: 7, url: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Audi Sedan' },
-      { id: 8, url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain Landscape' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'BMW Coupe' }
-    ]
-  },
-  {
     id: 'houses',
     title: 'Houses & Architecture',
     instruction: 'Select all squares with a HOUSE or RESIDENCE:',
@@ -51,9 +35,25 @@ const CHALLENGE_TOPICS: ChallengeTopic[] = [
       { id: 4, url: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Suburban Villa' },
       { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Red Car' },
       { id: 6, url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Country Estate' },
-      { id: 7, url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Nature Valley' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Nature Mountain' },
       { id: 8, url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Brick House' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Highrise Office' }
+      { id: 9, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Highrise Glass Tower' }
+    ]
+  },
+  {
+    id: 'cars',
+    title: 'Cars & Automobiles',
+    instruction: 'Select all squares with a CAR or AUTOMOBILE:',
+    tiles: [
+      { id: 1, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Porsche Sports Car' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern House' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Chevrolet Corvette' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Skyscraper' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Ferrari Red' },
+      { id: 6, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Luxury Villa' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Audi Sedan' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain Landscape' },
+      { id: 9, url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'BMW Coupe' }
     ]
   },
   {
@@ -64,15 +64,41 @@ const CHALLENGE_TOPICS: ChallengeTopic[] = [
       { id: 1, url: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'City Bus' },
       { id: 2, url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'House' },
       { id: 3, url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Red London Bus' },
-      { id: 4, url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Mountain' },
       { id: 5, url: 'https://images.unsplash.com/photo-1557223562-6c77ef16210f?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Double Decker Bus' },
       { id: 6, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Coupe' },
       { id: 7, url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Modern Home' },
       { id: 8, url: 'https://images.unsplash.com/photo-1509749837427-ac94a2553d0e?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Tourist Coach' },
-      { id: 9, url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Tower Building' }
+      { id: 9, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Tower Building' }
+    ]
+  },
+  {
+    id: 'skyscrapers',
+    title: 'Bridges & Skyscrapers',
+    instruction: 'Select all squares with BRIDGES or SKYSCRAPERS:',
+    tiles: [
+      { id: 1, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Glass Skyscraper' },
+      { id: 2, url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Sports Car' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Golden Gate Bridge' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Country Villa' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'City Skyline' },
+      { id: 6, url: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'City Bus' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1477959858617-67f30ac4ce00?w=300&auto=format&fit=crop&q=80', isCorrect: true, label: 'Metropolis Tower' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Red Ferrari' },
+      { id: 9, url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&auto=format&fit=crop&q=80', isCorrect: false, label: 'Interior Room' }
     ]
   }
 ];
+
+// Fisher-Yates Tile Shuffle Helper
+const shuffleTiles = (tiles: GridTile[]): GridTile[] => {
+  const arr = [...tiles];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 export const ReCaptcha: React.FC<ReCaptchaProps> = ({ 
   onVerify, 
@@ -86,10 +112,25 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
   // Challenge mode: 'grid' (choose cars/houses) vs 'fit' (slide & fit puzzle shape)
   const [challengeMode, setChallengeMode] = useState<'grid' | 'fit'>('grid');
   
-  // Grid Topic Index (rotating)
-  const [topicIndex, setTopicIndex] = useState(0);
+  // Rotating topic index dynamically incremented across page reloads
+  const [topicIndex, setTopicIndex] = useState(() => {
+    try {
+      const storedCount = localStorage.getItem('recaptcha_reload_counter');
+      const nextCount = storedCount ? (parseInt(storedCount, 10) + 1) : 0;
+      localStorage.setItem('recaptcha_reload_counter', nextCount.toString());
+      return nextCount % CHALLENGE_TOPICS.length;
+    } catch {
+      return Math.floor(Math.random() * CHALLENGE_TOPICS.length);
+    }
+  });
+
+  const [activeTiles, setActiveTiles] = useState<GridTile[]>(() => 
+    shuffleTiles(CHALLENGE_TOPICS[topicIndex].tiles)
+  );
+
   const [selectedTileIds, setSelectedTileIds] = useState<number[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [failedImageIds, setFailedImageIds] = useState<number[]>([]);
 
   // Object Fit Slider / Alignment State
   const [sliderPos, setSliderPos] = useState(10); // percentage 0-100
@@ -99,6 +140,13 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
   const [isFittingSuccess, setIsFittingSuccess] = useState(false);
 
   const currentTopic = CHALLENGE_TOPICS[topicIndex];
+
+  // Re-shuffle tiles whenever topicIndex changes
+  useEffect(() => {
+    setActiveTiles(shuffleTiles(CHALLENGE_TOPICS[topicIndex].tiles));
+    setSelectedTileIds([]);
+    setFailedImageIds([]);
+  }, [topicIndex]);
 
   const handleCheckboxClick = () => {
     if (isVerified || isVerifying) return;
@@ -119,6 +167,10 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     setErrorMessage(null);
   };
 
+  const handleImageError = (tileId: number) => {
+    setFailedImageIds((prev) => [...prev, tileId]);
+  };
+
   const rotateTopic = () => {
     setTopicIndex((prev) => (prev + 1) % CHALLENGE_TOPICS.length);
     setSelectedTileIds([]);
@@ -126,7 +178,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
   };
 
   const verifyGridChallenge = () => {
-    const correctIds = currentTopic.tiles.filter((t) => t.isCorrect).map((t) => t.id);
+    const correctIds = activeTiles.filter((t) => t.isCorrect).map((t) => t.id);
     
     // Check if user selected all correct tiles and no incorrect ones
     const isExactMatch = 
@@ -349,23 +401,33 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                 {challengeMode === 'grid' && (
                   <div>
                     <div className="grid grid-cols-3 gap-2 aspect-square relative bg-black/60 p-1 rounded border border-white/10">
-                      {currentTopic.tiles.map((tile) => {
+                      {activeTiles.map((tile) => {
                         const isSelected = selectedTileIds.includes(tile.id);
+                        const isImageFailed = failedImageIds.includes(tile.id);
                         return (
                           <div
                             key={tile.id}
                             onClick={() => handleTileClick(tile.id)}
-                            className={`relative cursor-pointer overflow-hidden rounded transition-all duration-200 group ${
+                            className={`relative cursor-pointer overflow-hidden rounded transition-all duration-200 group bg-slate-900 ${
                               isSelected ? 'ring-4 ring-[#4285F4] scale-[0.96]' : 'hover:opacity-90'
                             }`}
                           >
-                            <img 
-                              src={tile.url} 
-                              alt={tile.label}
-                              className={`w-full h-full object-cover transition-transform duration-300 ${
-                                isSelected ? 'scale-110 blur-[1px]' : 'group-hover:scale-105'
-                              }`} 
-                            />
+                            {!isImageFailed ? (
+                              <img 
+                                src={tile.url} 
+                                alt={tile.label}
+                                onError={() => handleImageError(tile.id)}
+                                className={`w-full h-full object-cover transition-transform duration-300 ${
+                                  isSelected ? 'scale-110 blur-[1px]' : 'group-hover:scale-105'
+                                }`} 
+                              />
+                            ) : (
+                              <div className="w-full h-full flex flex-col items-center justify-center p-2 bg-slate-800 text-gray-400 text-center">
+                                <ImageOff className="w-5 h-5 mb-1 text-gray-500" />
+                                <span className="text-[8px] font-mono leading-tight uppercase">{tile.label}</span>
+                              </div>
+                            )}
+
                             {isSelected && (
                               <div className="absolute inset-0 bg-[#4285F4]/40 flex items-center justify-center">
                                 <div className="w-7 h-7 rounded-full bg-[#4285F4] text-white flex items-center justify-center shadow-lg">

@@ -15,9 +15,7 @@ import { SecurityGate } from './components/SecurityGate';
 
 const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
-  const [isSecurityPassed, setIsSecurityPassed] = useState(() => {
-    return sessionStorage.getItem('recaptcha_gate_passed') === 'true';
-  });
+  const [isSecurityPassed, setIsSecurityPassed] = useState(false);
 
   useEffect(() => {
     // Show the site load completion state quickly
@@ -63,7 +61,7 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
       
-      <div className={`min-h-screen flex flex-col bg-brand-black text-brand-white selection:bg-brand-red selection:text-white relative transition-opacity duration-500 ${isReady ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`min-h-screen flex flex-col bg-brand-black text-brand-white selection:bg-brand-red selection:text-white relative transition-all duration-500 ${isReady ? 'opacity-100' : 'opacity-0'} ${!isSecurityPassed ? 'pointer-events-none select-none blur-md filter h-screen overflow-hidden' : ''}`}>
         <Navbar />
         
         <main className="flex-grow pt-20">
