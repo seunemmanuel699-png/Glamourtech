@@ -39,7 +39,7 @@ const Home: React.FC = () => {
       });
 
       // 2. Synchronize with external automation systems (Make.com webhook)
-      const response = await fetch("https://hook.us2.make.com/isg8hz89dc1yp9fkyxad68gy2g85yl4u", {
+      const response = await fetch("https://fluentix.app.n8n.cloud/webhook/91820592-4f05-48d3-86e1-0d9d055e1599", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,10 +61,9 @@ const Home: React.FC = () => {
         setIsSuccess(true);
         triggerNotification(
           'Strategic Booking Registered',
-          `Thank you ${formData.name}. Your strategy booking was registered successfully on Make.com hub. Connecting to scheduler...`,
+          `Thank you ${formData.name}. Your strategy booking was registered successfully on Make.com hub. We will be in touch shortly.`,
           'lead'
         );
-        window.location.href = "https://calendly.com/glamourtech/new-meeting";
       } else {
         throw new Error("Automation hook failed");
       }
@@ -74,12 +73,9 @@ const Home: React.FC = () => {
       setIsSuccess(true);
       triggerNotification(
         'Lead Secured',
-        `Thank you ${formData.name}. Your details have been securely logged in our systems. Connecting to scheduler...`,
+        `Thank you ${formData.name}. Your details have been securely logged in our systems. We will be in touch shortly.`,
         'lead'
       );
-      setTimeout(() => {
-        window.location.href = "https://calendly.com/glamourtech/new-meeting";
-      }, 2000);
     } finally {
       setIsSubmitting(false);
     }
@@ -291,8 +287,7 @@ const Home: React.FC = () => {
                   <svg className="w-8 h-8 md:w-10 md:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black heading-font mb-4 uppercase tracking-tighter">Transmission Successful</h3>
-                <p className="text-gray-400 text-base md:text-lg mb-8 md:mb-10">Redirecting to our secure booking gateway...</p>
-                <Link to="/contact" className="text-brand-red font-bold uppercase tracking-widest text-xs md:text-sm hover:underline">Click here to book your strategy call</Link>
+                <p className="text-gray-400 text-base md:text-lg mb-8 md:mb-10">Your details have been securely logged. We will be in touch shortly.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 relative z-10">

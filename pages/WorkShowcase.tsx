@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Quote } from 'lucide-react';
 
-const aiAgentImages = [
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_77_hq720.jpg",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_41_default.jpg",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_27_default.jpg",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_224_2024.04.30-ai-01.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_220_d3d1449f12510e3e.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_208_2025.11.30-aitools-11.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_206_Google_Antigravity_agent_side_panel.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_194_632169a236bc62cc.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_18_default.jpg",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_180_2025.11.30-aitools-15.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_172_google-antigravity-screenshots-on-an-orange-background.jpg",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_13_default.jpg",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_122_mIqH9QR42eeKoO7mYdYqy4UO3TU.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_11_default.png",
-  "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/workshowcase%20store/imgi_110_maxresdefault.jpg"
+const projectCategories = [
+  {
+    name: "Web & Mobile Applications",
+    subcategories: [
+      { name: "Enterprise Platforms", projects: [] },
+      { name: "Consumer Apps", projects: [] },
+      { name: "E-Commerce", projects: [] }
+    ]
+  },
+  {
+    name: "AI Agents & Automation",
+    subcategories: [
+      { name: "Intelligent Chatbots", projects: [] },
+      { name: "Workflow Automation", projects: [] },
+      { name: "Data Analytics", projects: [] }
+    ]
+  }
 ];
 
 const testimonials = [
@@ -43,38 +44,6 @@ const testimonials = [
 ];
 
 const WorkShowcase: React.FC = () => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-  // Handle escape key to close lightbox
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedIndex(null);
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
-
-  // Lock scroll when lightbox is open
-  useEffect(() => {
-    if (selectedIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [selectedIndex]);
-
-  const goToNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedIndex === null) return;
-    setSelectedIndex((selectedIndex + 1) % aiAgentImages.length);
-  };
-
-  const goToPrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedIndex === null) return;
-    setSelectedIndex((selectedIndex - 1 + aiAgentImages.length) % aiAgentImages.length);
-  };
-
   return (
     <div className="bg-transparent text-brand-white min-h-screen">
       {/* Page Header - No bottom padding to eliminate space */}
@@ -90,100 +59,50 @@ const WorkShowcase: React.FC = () => {
 
       {/* PORTFOLIO GRID SECTION - No top padding to eliminate space */}
       <section className="pb-16 pt-0 px-6 max-w-7xl mx-auto">
-        <div className="mb-6 flex items-center justify-between border-t border-white/5 pt-6 mt-4">
+        <div className="mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between border-t border-white/5 pt-6 mt-4 gap-4">
           <div className="text-left">
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 block">System Deployments</span>
-            <span className="text-white font-bold text-xs uppercase tracking-widest">Index 01 — {aiAgentImages.length} Nodes</span>
+            <span className="text-white font-bold text-xs uppercase tracking-widest">Active Architecture Models</span>
           </div>
           <div className="h-px flex-grow mx-8 bg-white/10 hidden md:block"></div>
         </div>
 
-        {/* High Density Thumbnail Image Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2 md:gap-3">
-          {aiAgentImages.map((src, idx) => (
-            <div 
-              key={idx} 
-              onClick={() => setSelectedIndex(idx)}
-              className="group relative overflow-hidden bg-white/5 border border-white/10 rounded-sm aspect-square cursor-pointer hover:border-brand-red/50 transition-all duration-300 shadow-xl"
-            >
-              <div className="absolute inset-0 z-10 bg-brand-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="bg-brand-red text-white p-1.5 rounded-full scale-75 group-hover:scale-100 transition-transform duration-300">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                </div>
+        {/* Categories & Subcategories */}
+        <div className="space-y-24">
+          {projectCategories.map((category, idx) => (
+            <div key={idx} className="space-y-12">
+              <div className="border-l-4 border-brand-red pl-6">
+                <h3 className="text-3xl md:text-4xl font-black heading-font uppercase tracking-tighter text-white">
+                  {category.name}
+                </h3>
               </div>
-              
-              <img 
-                src={src} 
-                alt={`AI Deployment ${idx + 1}`} 
-                className="w-full h-full object-cover grayscale-[0.6] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out"
-                loading="lazy"
-              />
 
-              {/* Status Overlay */}
-              <div className="absolute bottom-1 left-1 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-white font-black text-[5px] uppercase tracking-widest bg-brand-black/80 px-1 py-0.5 border border-white/5 backdrop-blur-sm">
-                  NODE-{idx + 1}
-                </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {category.subcategories.map((sub, sIdx) => (
+                  <div key={sIdx} className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-sm relative group hover:border-brand-red/30 transition-all duration-300">
+                    <h4 className="text-xl font-bold text-white mb-2">{sub.name}</h4>
+                    <p className="text-gray-500 text-xs font-mono uppercase tracking-widest mb-6 block">
+                      {sub.projects.length} Deployments Active
+                    </p>
+
+                    {/* Placeholder for future projects */}
+                    <div className="bg-black/40 rounded border border-white/5 h-40 flex items-center justify-center text-center p-4 group-hover:border-white/10 transition-colors">
+                      <div>
+                        <div className="w-8 h-8 rounded-full bg-brand-red/20 mx-auto mb-3 flex items-center justify-center">
+                          <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+                        </div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                          Secure Systems Synchronizing...
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
         </div>
       </section>
-
-      {/* Lightbox / Expanded Modal */}
-      {selectedIndex !== null && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-black/98 backdrop-blur-3xl p-4 md:p-12 animate-in fade-in duration-300"
-          onClick={() => setSelectedIndex(null)}
-        >
-          {/* Controls */}
-          <button 
-            onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-            className="absolute top-6 right-6 text-white/40 hover:text-brand-red transition-all z-[110] bg-white/5 p-2 rounded-full border border-white/10"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
-
-          <button 
-            onClick={goToPrev}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-6 text-white/20 hover:text-brand-red hover:bg-white/5 transition-all z-[110] rounded-full group bg-black/40 backdrop-blur-md"
-          >
-            <svg className="w-10 h-10 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-          </button>
-
-          <button 
-            onClick={goToNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-6 text-white/20 hover:text-brand-red hover:bg-white/5 transition-all z-[110] rounded-full group bg-black/40 backdrop-blur-md"
-          >
-            <svg className="w-10 h-10 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-          </button>
-
-          {/* Main Image View */}
-          <div 
-            className="relative max-w-7xl w-full h-full flex flex-col items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative group/img overflow-hidden border border-white/10 shadow-2xl bg-brand-black flex items-center justify-center">
-               <img 
-                src={aiAgentImages[selectedIndex]} 
-                className="max-h-[75vh] w-auto object-contain animate-in zoom-in-95 duration-500"
-                alt="Expanded Portfolio View"
-              />
-            </div>
-            
-            <div className="mt-8 flex flex-col items-center text-center space-y-3 max-w-2xl">
-              <div className="flex items-center space-x-4">
-                <span className="text-brand-red font-black text-[8px] uppercase tracking-[0.5em]">Systems Audit v2.5</span>
-                <div className="h-px w-16 bg-white/10"></div>
-                <span className="text-white font-black text-2xl md:text-3xl uppercase tracking-tighter">Architecture Nexus Node-{selectedIndex + 1}</span>
-              </div>
-              <p className="text-gray-500 font-bold uppercase tracking-[0.3em] text-[7px] md:text-[9px]">
-                Active Component {selectedIndex + 1} of {aiAgentImages.length} | Distributed AI Cluster Output
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* TESTIMONIALS SECTION */}
       <section className="py-16 md:py-24 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">

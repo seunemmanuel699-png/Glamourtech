@@ -67,7 +67,7 @@ const Contact: React.FC = () => {
       });
 
       // 3. Synchronize with external automation webhook (Make.com)
-      const response = await fetch("https://hook.us2.make.com/isg8hz89dc1yp9fkyxad68gy2g85yl4u", {
+      const response = await fetch("https://fluentix.app.n8n.cloud/webhook/91820592-4f05-48d3-86e1-0d9d055e1599", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -258,16 +258,7 @@ const Contact: React.FC = () => {
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <h3 className="text-2xl font-black heading-font mb-4 uppercase tracking-tighter">Transmission Successful</h3>
-                <p className="text-gray-400 text-sm mb-8">Data received. Proceed to scheduling or standby for contact.</p>
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('booking-section');
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="bg-white/5 border border-white/10 px-8 py-4 text-brand-white font-black uppercase tracking-[.4em] text-[9px] hover:bg-brand-red hover:border-brand-red transition-all"
-                >
-                  Go to Calendar Gateway ↓
-                </button>
+                <p className="text-gray-400 text-sm mb-8">Data received. We will be in touch shortly.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
