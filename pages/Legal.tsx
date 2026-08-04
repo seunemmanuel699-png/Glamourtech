@@ -82,7 +82,7 @@ const Legal: React.FC = () => {
   const { title, subtitle, content } = getContent();
 
   return (
-    <div className="min-h-screen bg-brand-black text-brand-white pt-32 pb-24 px-6">
+    <div className="min-h-screen bg-transparent text-brand-white pt-32 pb-24 px-6">
       <div className="max-w-4xl mx-auto">
         <span className="text-brand-red font-black tracking-[0.6em] uppercase text-xs mb-6 block">{subtitle}</span>
         <h1 className="text-5xl md:text-7xl font-black heading-font uppercase tracking-tighter mb-16">{title}</h1>

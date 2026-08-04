@@ -6,7 +6,7 @@ import { Logo } from './Logo';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-brand-black border-t border-white/10 py-16 px-6">
+    <footer className="bg-brand-black/80 backdrop-blur-md border-t border-white/10 py-16 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2">
           {/* Brand Logo & Name */}

@@ -76,7 +76,7 @@ const WorkShowcase: React.FC = () => {
   };
 
   return (
-    <div className="bg-brand-black text-brand-white min-h-screen">
+    <div className="bg-transparent text-brand-white min-h-screen">
       {/* Page Header - No bottom padding to eliminate space */}
       <section className="pt-32 pb-0 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">

@@ -17,41 +17,9 @@ const Home: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const founderImages = [
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_aznmddo5etymrdmm1cnlfwotqmyzqtl3ktoz0sz.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_gty5immijtyjhdzw0so0ktytqjzzqtlxktzk1so.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_mdm1mtzmdtmmbtmy0co0ktytignlrtlxm2m20co.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_mmmlrmmmnwz1ktn00yn0ytotitm2qtlzimn50iz.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_q2yhrmz1egzyqznm1iyizmytqtn1qtl2kdn20sm.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_qgojv2mygtnkftom1cz3igotktnwqtlwqwy20ym.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_uzm4qznyumy3u2m10izhvdotudzkrtl5ktzz0in.png",
-    "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_ywomvtmlvdm2qjz20im3mwytuzy2qtl4cdn30yn.png"
-  ];
-
   const commonCountries = [
     "United States", "United Kingdom", "Canada", "Australia", "Germany", "France", "United Arab Emirates", "Saudi Arabia", "Singapore", "Switzerland", "Netherlands", "Ireland", "Japan", "India", "Brazil", "Mexico"
   ];
-
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const timer = setInterval(() => {
-      setCurrentPhotoIndex((prev) => (prev + 1) % founderImages.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [founderImages.length, isAutoPlaying]);
-
-  const nextPhoto = () => {
-    setIsAutoPlaying(false);
-    setCurrentPhotoIndex((prev) => (prev + 1) % founderImages.length);
-  };
-
-  const prevPhoto = () => {
-    setIsAutoPlaying(false);
-    setCurrentPhotoIndex((prev) => (prev === 0 ? founderImages.length - 1 : prev - 1));
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,11 +86,11 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="bg-brand-black text-brand-white">
+    <div className="bg-transparent text-brand-white">
       {/* Hero Content Section */}
       <section className="relative pt-32 pb-16 md:min-h-[90vh] min-h-[60vh] flex items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-black/95 to-brand-black opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-transparent opacity-80"></div>
         </div>
 
         <div className="max-w-5xl mx-auto z-10 relative">
@@ -146,10 +114,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* Introductory Video Section */}
-      <section className="py-12 bg-brand-black border-t border-white/5 relative">
+      <section className="py-12 bg-transparent border-t border-white/5 relative">
         <div className="max-w-6xl mx-auto px-6">
           <div className="relative aspect-video w-full rounded-sm overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] group bg-black">
-            <div className="absolute top-4 left-4 z-20 flex items-center space-x-2 bg-brand-black/40 backdrop-blur-md px-3 py-1 rounded-sm border border-white/10">
+            <div className="absolute top-4 left-4 z-20 flex items-center space-x-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-sm border border-white/10">
               <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
               <span className="text-[10px] font-black uppercase tracking-widest text-white">System Active</span>
             </div>
@@ -165,34 +133,6 @@ const Home: React.FC = () => {
             >
               <source src="https://res.cloudinary.com/fxudag9y/video/upload/v1785799794/message_and_lets_start_your_project_imediately_1_whyuls.mp4" type="video/mp4" />
             </video>
-          </div>
-        </div>
-      </section>
-
-      {/* Photo Story Section */}
-      <section className="relative w-full z-20 bg-brand-black border-t border-white/5">
-        <div className="relative w-full h-[60vh] md:h-screen overflow-hidden group">
-          {founderImages.map((src, index) => (
-            <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex items-center justify-center ${index === currentPhotoIndex ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}>
-              <div className="absolute inset-0 z-0">
-                <img src={src} alt="" className="w-full h-full object-cover blur-3xl opacity-20 scale-110" loading="lazy" />
-              </div>
-              <img src={src} alt={`Glamour Showcase ${index + 1}`} className="relative z-10 w-full h-full object-contain" />
-            </div>
-          ))}
-
-          <button onClick={prevPhoto} className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-40 p-4 md:p-6 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 hover:bg-brand-red transition-all transform hover:scale-110 active:scale-95">
-            <svg className="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-          </button>
-          
-          <button onClick={nextPhoto} className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-40 p-4 md:p-6 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 hover:bg-brand-red transition-all transform hover:scale-110 active:scale-95">
-            <svg className="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-          </button>
-
-          <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-40 flex space-x-2 md:space-x-3 bg-black/60 backdrop-blur-3xl px-4 py-3 md:px-6 md:py-4 rounded-full border border-white/10">
-            {founderImages.map((_, idx) => (
-              <button key={idx} onClick={() => { setIsAutoPlaying(false); setCurrentPhotoIndex(idx); }} className={`h-1.5 md:h-2 transition-all duration-500 rounded-full ${idx === currentPhotoIndex ? 'w-10 md:w-16 bg-brand-red' : 'w-2 md:w-4 bg-white/20 hover:bg-white/40'}`}></button>
-            ))}
           </div>
         </div>
       </section>
@@ -214,7 +154,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Trust & Certifications Section */}
-      <section className="py-16 md:py-24 px-6 bg-gradient-to-b from-[#050B14] to-brand-black border-t border-white/5 relative overflow-hidden">
+      <section className="py-16 md:py-24 px-6 bg-gradient-to-b from-transparent to-transparent border-t border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#A6CE39]/5 rounded-full blur-[140px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto">
@@ -332,7 +272,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Application Form Section */}
-      <section id="book" className="py-16 md:py-32 px-4 md:px-6 bg-brand-black border-t border-white/5">
+      <section id="book" className="py-16 md:py-32 px-4 md:px-6 bg-transparent border-t border-white/5">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-start">
           <div>
             <span className="text-brand-red font-black tracking-[0.6em] uppercase text-[10px] md:text-xs mb-6 md:mb-8 block">SYSTEM AUDIT REQUEST</span>
@@ -359,22 +299,22 @@ const Home: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Full Name</label>
-                    <input required type="text" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                    <input required type="text" disabled={isSubmitting} className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
                   </div>
                   <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Work Email</label>
-                    <input required type="email" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="john@company.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                    <input required type="email" disabled={isSubmitting} className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="john@company.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">PHONE NUMBER</label>
-                    <input required type="tel" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="+1 234 567 8900" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                    <input required type="tel" disabled={isSubmitting} className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="+1 234 567 8900" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                   </div>
                   <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">COUNTRY</label>
-                    <input required list="home-country-list" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Choose or Type" value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} />
+                    <input required list="home-country-list" disabled={isSubmitting} className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Choose or Type" value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} />
                     <datalist id="home-country-list">
                       {commonCountries.map(c => <option key={c} value={c} />)}
                     </datalist>
@@ -383,7 +323,7 @@ const Home: React.FC = () => {
                 
                 <div className="space-y-3 md:space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Company</label>
-                  <input required type="text" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Company Name" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                  <input required type="text" disabled={isSubmitting} className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Company Name" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
                 </div>
 
                 <div className="space-y-3 md:space-y-4">
@@ -392,7 +332,7 @@ const Home: React.FC = () => {
                     required 
                     type="text" 
                     disabled={isSubmitting} 
-                    className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" 
+                    className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" 
                     placeholder="Budget Range" 
                     value={formData.budget} 
                     onChange={(e) => setFormData({...formData, budget: e.target.value})} 
@@ -401,7 +341,7 @@ const Home: React.FC = () => {
 
                 <div className="space-y-3 md:space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Vision & Outcomes</label>
-                  <textarea required rows={4} disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Project Vision / Outcomes Required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
+                  <textarea required rows={4} disabled={isSubmitting} className="w-full bg-black/50 border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Project Vision / Outcomes Required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
                 </div>
 
                 <button 

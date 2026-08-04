@@ -61,7 +61,21 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
       
-      <div className={`min-h-screen flex flex-col bg-brand-black text-brand-white selection:bg-brand-blue selection:text-white relative transition-all duration-500 ${isReady ? 'opacity-100' : 'opacity-0'} ${!isSecurityPassed ? 'pointer-events-none select-none blur-md filter h-screen overflow-hidden' : ''}`}>
+      {/* Global Background Video */}
+      <div className="fixed inset-0 z-[-1] pointer-events-none w-full h-full bg-brand-black">
+        <video 
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover opacity-30"
+        >
+          <source src="https://res.cloudinary.com/fxudag9y/video/upload/v1785804148/backgrounmovie_bi80gz.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-black/60 to-brand-black/90 mix-blend-multiply"></div>
+      </div>
+
+      <div className={`min-h-screen flex flex-col bg-transparent text-brand-white selection:bg-brand-blue selection:text-white relative transition-all duration-500 ${isReady ? 'opacity-100' : 'opacity-0'} ${!isSecurityPassed ? 'pointer-events-none select-none blur-md filter h-screen overflow-hidden' : ''}`}>
         <Navbar />
         
         <main className="flex-grow pt-20">
