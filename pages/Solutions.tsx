@@ -43,7 +43,7 @@ const solutions = [
 
 const Solutions: React.FC = () => {
   return (
-    <div className="py-20 px-6 max-w-7xl mx-auto">
+    <div className="py-12 md:py-20 px-6 max-w-7xl mx-auto">
       <div className="mb-20">
         <h1 className="text-5xl font-bold heading-font mb-6">Built for Enterprise Outcomes</h1>
         <p className="text-gray-400 max-w-2xl text-xl">

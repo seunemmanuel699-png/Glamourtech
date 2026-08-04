@@ -121,9 +121,6 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
   const [isVerified, setIsVerified] = useState(false);
   const [showChallengeModal, setShowChallengeModal] = useState(false);
   
-  // Challenge mode: 'grid' (choose cars/houses) vs 'fit' (slide & fit puzzle shape)
-  const [challengeMode, setChallengeMode] = useState<'grid' | 'fit'>('grid');
-  
   // Rotating topic index dynamically incremented across page reloads
   const [topicIndex, setTopicIndex] = useState(() => {
     try {
@@ -144,38 +141,7 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [failedImageIds, setFailedImageIds] = useState<number[]>([]);
 
-  // Dynamic Fit Challenge Generator State (supports over 100 combinations!)
-  const [fitChallengeId, setFitChallengeId] = useState(1);
-  const [targetSliderPos, setTargetSliderPos] = useState(70);
-  const [targetRotationAngle, setTargetRotationAngle] = useState(0);
-  const [fitIconIndex, setFitIconIndex] = useState(0);
-
-  const [sliderPos, setSliderPos] = useState(10);
-  const [rotationAngle, setRotationAngle] = useState(90);
-  const [isFittingSuccess, setIsFittingSuccess] = useState(false);
-
   const currentTopic = CHALLENGE_TOPICS[topicIndex];
-
-  // Generate a random new Fit Challenge with different position, rotation, and icon shape
-  const generateNewFitChallenge = () => {
-    const posOptions = [25, 35, 45, 55, 65, 75, 80];
-    const rotOptions = [-135, -90, -45, 0, 45, 90, 135];
-    
-    const newTargetPos = posOptions[Math.floor(Math.random() * posOptions.length)];
-    const newTargetRot = rotOptions[Math.floor(Math.random() * rotOptions.length)];
-    const newIconIdx = Math.floor(Math.random() * FIT_ICONS.length);
-    
-    setTargetSliderPos(newTargetPos);
-    setTargetRotationAngle(newTargetRot);
-    setFitIconIndex(newIconIdx);
-    setFitChallengeId((prev) => prev + 1);
-
-    // Set non-overlapping initial user positions
-    setSliderPos(newTargetPos > 50 ? 15 : 85);
-    setRotationAngle((newTargetRot + 90) > 180 ? newTargetRot - 90 : newTargetRot + 90);
-    setErrorMessage(null);
-    setIsFittingSuccess(false);
-  };
 
   // Re-shuffle tiles whenever topicIndex changes
   useEffect(() => {
@@ -193,7 +159,6 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     setTimeout(() => {
       setShowChallengeModal(true);
       setIsVerifying(false);
-      generateNewFitChallenge();
     }, 400);
   };
 
@@ -223,9 +188,10 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
       selectedTileIds.every((id) => correctIds.includes(id));
 
     if (isExactMatch && selectedTileIds.length > 0) {
-      // Transition to Stage 2: Slide/Fit Object Challenge for total verification!
       setErrorMessage(null);
-      setChallengeMode('fit');
+      setShowChallengeModal(false);
+      setIsVerified(true);
+      onVerify(true);
     } else {
       setErrorMessage('Please try again. Select all matching squares containing ' + currentTopic.title);
       // Auto rotate topic on miss
@@ -235,35 +201,15 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
     }
   };
 
-  // Check Slider / Draw Fit accuracy
-  const verifyFitChallenge = () => {
-    const posDiff = Math.abs(sliderPos - targetSliderPos);
-    const rotDiff = Math.abs(rotationAngle - targetRotationAngle);
-
-    if (posDiff <= 5 && rotDiff <= 12) {
-      setIsFittingSuccess(true);
-      setTimeout(() => {
-        setShowChallengeModal(false);
-        setIsVerified(true);
-        onVerify(true);
-      }, 800);
-    } else {
-      setErrorMessage(`Not aligned! Rotate slider to ${targetRotationAngle}° and position slider to ${targetSliderPos}%.`);
-    }
-  };
-
   const resetCaptcha = () => {
     setIsVerifying(false);
     setIsVerified(false);
     setShowChallengeModal(false);
     setSelectedTileIds([]);
-    setChallengeMode('grid');
-    setIsFittingSuccess(false);
     onVerify(false);
   };
 
   const isDark = theme === 'dark';
-  const CurrentFitIcon = FIT_ICONS[fitIconIndex].Icon;
 
   return (
     <>
@@ -344,12 +290,6 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
             <span className="text-[8px] text-gray-500 uppercase mt-0.5 font-mono tracking-widest">Enterprise AI</span>
           </div>
         </div>
-
-        {/* Small terms helper footer */}
-        <div className={`mt-3 pt-2 border-t text-[8px] font-mono tracking-wider flex items-center justify-between ${isDark ? 'border-white/5 text-gray-600' : 'border-gray-200 text-gray-400'}`}>
-          <span className="hover:underline cursor-pointer">Glamourtech Solutions Privacy</span>
-          <span className="hover:underline cursor-pointer">Terms & Core Policy</span>
-        </div>
       </div>
 
       {/* POPUP RECAPTCHA CHALLENGE MODAL */}
@@ -373,51 +313,18 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                   reCAPTCHA v3 Interactive Challenge
                 </span>
                 
-                {challengeMode === 'grid' ? (
-                  <>
-                    <h3 className="text-xl font-bold tracking-tight uppercase leading-tight">
-                      {currentTopic.instruction}
-                    </h3>
-                    <p className="text-xs text-white/90 mt-1 font-medium">
-                      If there are none, click skip or rotate.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-xl font-bold tracking-tight uppercase leading-tight">
-                      Rotate & Slide Object to Fit Slot
-                    </h3>
-                    <p className="text-xs text-white/90 mt-1 font-medium">
-                      Challenge #{fitChallengeId}: Match target angle ({targetRotationAngle}°) & position ({targetSliderPos}%).
-                    </p>
-                  </>
-                )}
+                <h3 className="text-xl font-bold tracking-tight uppercase leading-tight">
+                  {currentTopic.instruction}
+                </h3>
+                <p className="text-xs text-white/90 mt-1 font-medium">
+                  If there are none, click skip or rotate.
+                </p>
 
                 <button 
                   onClick={() => setShowChallengeModal(false)}
                   className="absolute top-3 right-3 text-white/80 hover:text-white text-xs font-mono bg-black/20 hover:bg-black/40 px-2 py-1 rounded"
                 >
                   ✕
-                </button>
-              </div>
-
-              {/* Mode Switch Tabs */}
-              <div className="bg-black/40 border-b border-white/10 flex text-[10px] font-mono uppercase tracking-wider">
-                <button
-                  onClick={() => setChallengeMode('grid')}
-                  className={`flex-1 py-2 text-center transition-colors border-r border-white/10 ${
-                    challengeMode === 'grid' ? 'bg-[#0066FF]/20 text-[#00D2FF] font-bold' : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  1. Image Grid ({currentTopic.title})
-                </button>
-                <button
-                  onClick={() => setChallengeMode('fit')}
-                  className={`flex-1 py-2 text-center transition-colors ${
-                    challengeMode === 'fit' ? 'bg-[#0066FF]/20 text-[#00D2FF] font-bold' : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  2. Draw / Fit Shape (#{fitChallengeId})
                 </button>
               </div>
 
@@ -434,9 +341,8 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                 )}
 
                 {/* MODE 1: 3x3 IMAGE GRID CHALLENGE */}
-                {challengeMode === 'grid' && (
-                  <div>
-                    <div className="grid grid-cols-3 gap-2 aspect-square relative bg-black/60 p-1 rounded border border-white/10">
+                <div>
+                  <div className="grid grid-cols-3 gap-2 aspect-square relative bg-black/60 p-1 rounded border border-white/10">
                       {activeTiles.map((tile) => {
                         const isSelected = selectedTileIds.includes(tile.id);
                         const isImageFailed = failedImageIds.includes(tile.id);
@@ -497,102 +403,10 @@ export const ReCaptcha: React.FC<ReCaptchaProps> = ({
                             : 'bg-white/10 text-gray-500 cursor-not-allowed'
                         }`}
                       >
-                        Next Step
+                        VERIFY
                       </button>
                     </div>
                   </div>
-                )}
-
-                {/* MODE 2: SLIDE / DRAW & ROTATE OBJECT TO FIT TARGET SLOT */}
-                {challengeMode === 'fit' && (
-                  <div className="space-y-4">
-                    {/* Interactive Puzzle Canvas Area */}
-                    <div className="h-48 bg-[#040811] border border-white/10 rounded relative overflow-hidden flex items-center justify-center">
-                      {/* Grid background lines */}
-                      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:16px_16px]" />
-
-                      {/* Target Missing Cutout Slot (Dashed Outline) */}
-                      <div 
-                        className="absolute w-20 h-20 border-2 border-dashed border-[#00D2FF] bg-[#0066FF]/15 rounded-lg flex items-center justify-center transition-all duration-300"
-                        style={{ left: `${targetSliderPos}%`, transform: `translateX(-50%) rotate(${targetRotationAngle}deg)` }}
-                      >
-                        <span className="text-[9px] font-mono text-[#00D2FF] uppercase font-bold tracking-widest text-center px-1">
-                          TARGET
-                        </span>
-                      </div>
-
-                      {/* Draggable/Rotatable Object Shape */}
-                      <motion.div 
-                        className={`absolute w-20 h-20 bg-gradient-to-tr from-[#0066FF] to-[#00D2FF] rounded-lg shadow-xl border border-white/30 flex flex-col items-center justify-center transition-all ${
-                          isFittingSuccess ? 'bg-green-500 border-green-400 shadow-[0_0_25px_rgba(34,197,94,0.6)]' : ''
-                        }`}
-                        style={{ 
-                          left: `${sliderPos}%`, 
-                          transform: `translateX(-50%) rotate(${rotationAngle}deg)` 
-                        }}
-                      >
-                        <CurrentFitIcon className="w-8 h-8 text-white" />
-                        <span className="text-[8px] font-mono font-bold text-white uppercase mt-1">FIT ME</span>
-                      </motion.div>
-                    </div>
-
-                    {/* Controls: Horizontal Slide Position */}
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px] font-mono text-gray-400">
-                        <span>Slide Position</span>
-                        <span className="text-[#00D2FF] font-bold">{Math.round(sliderPos)}%</span>
-                      </div>
-                      <input 
-                        type="range" 
-                        min="0" 
-                        max="100" 
-                        value={sliderPos}
-                        onChange={(e) => {
-                          setSliderPos(Number(e.target.value));
-                          setErrorMessage(null);
-                        }}
-                        className="w-full accent-[#0066FF] cursor-pointer"
-                      />
-                    </div>
-
-                    {/* Controls: Object Rotation Angle */}
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px] font-mono text-gray-400">
-                        <span>Rotate Angle</span>
-                        <span className="text-[#00D2FF] font-bold">{rotationAngle}°</span>
-                      </div>
-                      <input 
-                        type="range" 
-                        min="-180" 
-                        max="180" 
-                        value={rotationAngle}
-                        onChange={(e) => {
-                          setRotationAngle(Number(e.target.value));
-                          setErrorMessage(null);
-                        }}
-                        className="w-full accent-[#0066FF] cursor-pointer"
-                      />
-                    </div>
-
-                    <div className="pt-2 flex items-center justify-between gap-2">
-                      <button
-                        onClick={generateNewFitChallenge}
-                        className="p-2 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded text-xs font-mono flex items-center gap-1.5 transition-colors border border-white/10"
-                        title="Generate a new randomized puzzle challenge"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5 text-[#00D2FF]" />
-                        <span>New Challenge</span>
-                      </button>
-
-                      <button
-                        onClick={verifyFitChallenge}
-                        className="px-6 py-2.5 bg-[#0066FF] hover:bg-[#0052D4] text-white rounded font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-[#0066FF]/30"
-                      >
-                        VERIFY ACCESS
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Modal Footer */}

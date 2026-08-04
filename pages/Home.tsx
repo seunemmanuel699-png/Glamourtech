@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Award, CheckCircle2, ExternalLink, Cpu, Lock } from 'lucide-react';
 import { triggerNotification } from '../components/NotificationSystem';
-import { ReCaptcha } from '../components/ReCaptcha';
 import { saveSubmission } from '../firebase';
 
 const Home: React.FC = () => {
@@ -17,9 +16,6 @@ const Home: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
-
-  const welcomeVideoRef = useRef<HTMLVideoElement>(null);
 
   const founderImages = [
     "https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/my%20pictures/Whisk_aznmddo5etymrdmm1cnlfwotqmyzqtl3ktoz0sz.png",
@@ -38,31 +34,6 @@ const Home: React.FC = () => {
 
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  useEffect(() => {
-    const handleInteraction = () => {
-      if (welcomeVideoRef.current) {
-        welcomeVideoRef.current.muted = false;
-        welcomeVideoRef.current.play().catch(() => {
-          // Fallback if unmuted play is blocked
-          if (welcomeVideoRef.current) welcomeVideoRef.current.muted = true;
-        });
-      }
-    };
-
-    window.addEventListener('click', handleInteraction, { once: true });
-    window.addEventListener('scroll', handleInteraction, { once: true });
-
-    if (welcomeVideoRef.current) {
-      welcomeVideoRef.current.muted = true;
-      welcomeVideoRef.current.play().catch(() => {});
-    }
-
-    return () => {
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('scroll', handleInteraction);
-    };
-  }, []);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -84,14 +55,6 @@ const Home: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isCaptchaVerified) {
-      triggerNotification(
-        'Security Bypass Prevented',
-        'Please verify the Neural-Gate reCAPTCHA biometric challenge before submitting.',
-        'system'
-      );
-      return;
-    }
     setIsSubmitting(true);
 
     try {
@@ -157,41 +120,32 @@ const Home: React.FC = () => {
   return (
     <div className="bg-brand-black text-brand-white">
       {/* Hero Content Section */}
-      <section className="relative pt-24 pb-16 min-h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden">
+      <section className="relative pt-32 pb-16 md:min-h-[90vh] min-h-[60vh] flex items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="w-full h-full object-cover opacity-40"
-          >
-            <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/Glamour%20tech/backgrounmovie.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-transparent to-brand-black opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-black/95 to-brand-black opacity-80"></div>
         </div>
 
         <div className="max-w-5xl mx-auto z-10 relative">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold heading-font mb-8 leading-tight tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold heading-font mb-4 md:mb-8 leading-tight tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
             AI Systems That Replace <br />
             <span className="text-brand-red">Manual Work</span> and Scale Revenue
           </h1>
-          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 font-medium drop-shadow-md animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+          <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 md:mb-12 font-medium drop-shadow-md animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
             We build production-ready AI agents, automation, and applications for companies that want real ROI—not experiments.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
-            <Link to="/contact" className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-sm font-bold text-lg hover:bg-red-700 transition-all shadow-xl shadow-brand-red/30 uppercase tracking-widest text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+            <Link to="/contact" className="w-full sm:w-auto bg-brand-red text-white px-6 py-4 md:px-10 md:py-5 rounded-sm font-bold text-base md:text-lg hover:bg-red-700 transition-all shadow-xl shadow-brand-red/30 uppercase tracking-widest text-center">
               Book a Strategy Call
             </Link>
-            <Link to="/solutions" className="w-full sm:w-auto border border-white/30 bg-white/5 backdrop-blur-sm text-white px-10 py-5 rounded-sm font-bold text-lg hover:bg-white/10 transition-all uppercase tracking-widest text-center">
+            <Link to="/solutions" className="w-full sm:w-auto border border-white/30 bg-white/5 backdrop-blur-sm text-white px-6 py-4 md:px-10 md:py-5 rounded-sm font-bold text-base md:text-lg hover:bg-white/10 transition-all uppercase tracking-widest text-center">
               Explore Solutions
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Welcome Video Section */}
+      {/* Introductory Video Section */}
       <section className="py-12 bg-brand-black border-t border-white/5 relative">
         <div className="max-w-6xl mx-auto px-6">
           <div className="relative aspect-video w-full rounded-sm overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] group bg-black">
@@ -201,14 +155,15 @@ const Home: React.FC = () => {
             </div>
 
             <video 
-              ref={welcomeVideoRef} 
               autoPlay
+              muted
+              loop
               playsInline 
               controls 
               className="w-full h-full object-cover cursor-pointer" 
               preload="metadata"
             >
-              <source src="https://hvtxvvalhjxjzixoiaun.supabase.co/storage/v1/object/public/introductory%20video%20and%20work%20showcase/welcome%20video.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/fxudag9y/video/upload/v1785799794/message_and_lets_start_your_project_imediately_1_whyuls.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
@@ -216,7 +171,7 @@ const Home: React.FC = () => {
 
       {/* Photo Story Section */}
       <section className="relative w-full z-20 bg-brand-black border-t border-white/5">
-        <div className="relative w-full h-screen overflow-hidden group">
+        <div className="relative w-full h-[60vh] md:h-screen overflow-hidden group">
           {founderImages.map((src, index) => (
             <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex items-center justify-center ${index === currentPhotoIndex ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}>
               <div className="absolute inset-0 z-0">
@@ -226,52 +181,52 @@ const Home: React.FC = () => {
             </div>
           ))}
 
-          <button onClick={prevPhoto} className="absolute left-10 top-1/2 -translate-y-1/2 z-40 p-6 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white opacity-0 group-hover:opacity-100 hover:bg-brand-red transition-all transform hover:scale-110 active:scale-95">
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          <button onClick={prevPhoto} className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-40 p-4 md:p-6 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 hover:bg-brand-red transition-all transform hover:scale-110 active:scale-95">
+            <svg className="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
           
-          <button onClick={nextPhoto} className="absolute right-10 top-1/2 -translate-y-1/2 z-40 p-6 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white opacity-0 group-hover:opacity-100 hover:bg-brand-red transition-all transform hover:scale-110 active:scale-95">
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          <button onClick={nextPhoto} className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-40 p-4 md:p-6 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 hover:bg-brand-red transition-all transform hover:scale-110 active:scale-95">
+            <svg className="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
 
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40 flex space-x-3 bg-black/60 backdrop-blur-3xl px-6 py-4 rounded-full border border-white/10">
+          <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-40 flex space-x-2 md:space-x-3 bg-black/60 backdrop-blur-3xl px-4 py-3 md:px-6 md:py-4 rounded-full border border-white/10">
             {founderImages.map((_, idx) => (
-              <button key={idx} onClick={() => { setIsAutoPlaying(false); setCurrentPhotoIndex(idx); }} className={`h-2 transition-all duration-500 rounded-full ${idx === currentPhotoIndex ? 'w-16 bg-brand-red' : 'w-4 bg-white/20 hover:bg-white/40'}`}></button>
+              <button key={idx} onClick={() => { setIsAutoPlaying(false); setCurrentPhotoIndex(idx); }} className={`h-1.5 md:h-2 transition-all duration-500 rounded-full ${idx === currentPhotoIndex ? 'w-10 md:w-16 bg-brand-red' : 'w-2 md:w-4 bg-white/20 hover:bg-white/40'}`}></button>
             ))}
           </div>
         </div>
       </section>
 
       {/* Metrics Section */}
-      <section className="py-24 border-b border-white/5 bg-white/5">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
+      <section className="py-16 md:py-24 border-b border-white/5 bg-white/5">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 text-center">
           {[
             { val: "500+", label: "Workflows Automated" },
             { val: "40%", label: "Avg. Cost Reduction" },
             { val: "12", label: "Industries Transformed" }
           ].map((m, i) => (
             <div key={i} className="group">
-              <p className="text-7xl font-black heading-font text-brand-red mb-3 tracking-tighter transition-transform group-hover:scale-110">{m.val}</p>
-              <p className="text-gray-400 uppercase tracking-[0.3em] text-xs font-black">{m.label}</p>
+              <p className="text-6xl md:text-7xl font-black heading-font text-brand-red mb-2 md:mb-3 tracking-tighter transition-transform group-hover:scale-110">{m.val}</p>
+              <p className="text-gray-400 uppercase tracking-[0.3em] text-[10px] md:text-xs font-black">{m.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Trust & Certifications Section */}
-      <section className="py-24 px-6 bg-gradient-to-b from-[#050B14] to-brand-black border-t border-white/5 relative overflow-hidden">
+      <section className="py-16 md:py-24 px-6 bg-gradient-to-b from-[#050B14] to-brand-black border-t border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#A6CE39]/5 rounded-full blur-[140px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
             <span className="text-[#A6CE39] font-black tracking-[0.6em] uppercase text-xs mb-4 flex items-center justify-center gap-2">
               <Award className="w-4 h-4 text-[#A6CE39]" />
               Peer-Verified Integrity & Accreditation
             </span>
-            <h2 className="text-5xl md:text-7xl font-black heading-font uppercase tracking-tighter text-white">
+            <h2 className="text-4xl md:text-7xl font-black heading-font uppercase tracking-tighter text-white">
               Trust & <span className="text-[#A6CE39]">Certifications</span>
             </h2>
-            <p className="text-gray-400 text-xl font-medium mt-6 leading-relaxed">
+            <p className="text-gray-400 text-lg md:text-xl font-medium mt-4 md:mt-6 leading-relaxed">
               Engineered with research-backed AI architectures, verified persistent researcher credentials, and enterprise security compliance.
             </p>
           </div>
@@ -377,92 +332,84 @@ const Home: React.FC = () => {
       </section>
 
       {/* Application Form Section */}
-      <section id="book" className="py-32 px-6 bg-brand-black border-t border-white/5">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+      <section id="book" className="py-16 md:py-32 px-4 md:px-6 bg-brand-black border-t border-white/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-start">
           <div>
-            <span className="text-brand-red font-black tracking-[0.6em] uppercase text-xs mb-8 block">SYSTEM AUDIT REQUEST</span>
-            <h2 className="text-6xl md:text-8xl font-black heading-font mb-10 text-brand-white uppercase tracking-tighter leading-none">
+            <span className="text-brand-red font-black tracking-[0.6em] uppercase text-[10px] md:text-xs mb-6 md:mb-8 block">SYSTEM AUDIT REQUEST</span>
+            <h2 className="text-5xl md:text-8xl font-black heading-font mb-6 md:mb-10 text-brand-white uppercase tracking-tighter leading-none">
               Deploy Your <br /><span className="text-brand-red">AI Roadmap</span>
             </h2>
-            <p className="text-gray-400 text-2xl leading-relaxed max-w-md mb-12 font-medium">
+            <p className="text-gray-400 text-lg md:text-2xl leading-relaxed max-w-md mb-8 md:mb-12 font-medium">
               Qualified enterprise clients can schedule a deep-dive systems audit with our senior technical architects.
             </p>
           </div>
 
-          <div className="bg-white/5 border border-white/10 p-12 rounded-sm shadow-2xl relative">
+          <div className="bg-white/5 border border-white/10 p-6 md:p-12 rounded-sm shadow-2xl relative">
             {isSuccess ? (
-              <div className="text-center py-20 animate-in fade-in zoom-in duration-500">
-                <div className="w-20 h-20 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_30px_rgba(215,38,56,0.4)]">
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+              <div className="text-center py-10 md:py-20 animate-in fade-in zoom-in duration-500">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-[0_0_30px_rgba(215,38,56,0.4)]">
+                  <svg className="w-8 h-8 md:w-10 md:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
-                <h3 className="text-3xl font-black heading-font mb-4 uppercase tracking-tighter">Transmission Successful</h3>
-                <p className="text-gray-400 text-lg mb-10">Redirecting to our secure booking gateway...</p>
-                <Link to="/contact" className="text-brand-red font-bold uppercase tracking-widest text-sm hover:underline">Click here to book your strategy call</Link>
+                <h3 className="text-2xl md:text-3xl font-black heading-font mb-4 uppercase tracking-tighter">Transmission Successful</h3>
+                <p className="text-gray-400 text-base md:text-lg mb-8 md:mb-10">Redirecting to our secure booking gateway...</p>
+                <Link to="/contact" className="text-brand-red font-bold uppercase tracking-widest text-xs md:text-sm hover:underline">Click here to book your strategy call</Link>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Full Name</label>
-                    <input required type="text" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                    <input required type="text" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Work Email</label>
-                    <input required type="email" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="john@company.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                    <input required type="email" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="john@company.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">PHONE NUMBER</label>
-                    <input required type="tel" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="+1 234 567 8900" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                    <input required type="tel" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="+1 234 567 8900" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">COUNTRY</label>
-                    <input required list="home-country-list" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Choose or Type" value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} />
+                    <input required list="home-country-list" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Choose or Type" value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} />
                     <datalist id="home-country-list">
                       {commonCountries.map(c => <option key={c} value={c} />)}
                     </datalist>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Company</label>
-                  <input required type="text" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Company Name" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                  <input required type="text" disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Company Name" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Quarterly Budget</label>
                   <input 
                     required 
                     type="text" 
                     disabled={isSubmitting} 
-                    className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" 
-                    placeholder="e.g. $10k - $50k, $25,000, or custom range" 
+                    className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" 
+                    placeholder="Budget Range" 
                     value={formData.budget} 
                     onChange={(e) => setFormData({...formData, budget: e.target.value})} 
                   />
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Vision & Outcomes</label>
-                  <textarea required rows={4} disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-6 py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Project Vision / Outcomes Required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
-                </div>
-
-                <div className="py-2">
-                  <ReCaptcha onVerify={setIsCaptchaVerified} />
+                  <textarea required rows={4} disabled={isSubmitting} className="w-full bg-brand-black border border-white/10 px-4 py-4 md:px-6 md:py-6 focus:border-brand-red outline-none transition-all text-brand-white disabled:opacity-50" placeholder="Project Vision / Outcomes Required..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}></textarea>
                 </div>
 
                 <button 
                   type="submit" 
-                  disabled={isSubmitting || !isCaptchaVerified} 
-                  className={`w-full py-8 font-black uppercase tracking-widest transition-all shadow-2xl rounded-sm ${
-                    isCaptchaVerified 
-                      ? 'bg-brand-red text-white hover:bg-red-700 shadow-brand-red/20 cursor-pointer' 
-                      : 'bg-gray-800 text-gray-500 border border-white/5 cursor-not-allowed shadow-none'
-                  }`}
+                  disabled={isSubmitting} 
+                  className="w-full py-5 md:py-8 font-black uppercase tracking-widest transition-all shadow-2xl rounded-sm bg-brand-red text-white hover:bg-red-700 shadow-brand-red/20 cursor-pointer text-sm md:text-base"
                 >
-                  {isSubmitting ? 'Transmitting Data...' : !isCaptchaVerified ? 'Complete ReCaptcha to Unlock' : 'Submit Application'}
+                  {isSubmitting ? 'Transmitting Data...' : 'Submit Application'}
                 </button>
               </form>
             )}

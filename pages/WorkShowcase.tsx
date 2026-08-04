@@ -186,9 +186,9 @@ const WorkShowcase: React.FC = () => {
       )}
 
       {/* TESTIMONIALS SECTION */}
-      <section className="py-24 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
+      <section className="py-16 md:py-24 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="mb-16">
+          <div className="mb-12 md:mb-16">
             <motion.span 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -215,22 +215,22 @@ const WorkShowcase: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.15 }}
-                className="bg-white/5 border border-white/10 p-8 rounded-sm relative group hover:border-brand-red/30 transition-all duration-500 ease-out"
+                className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-sm relative group hover:border-brand-red/30 transition-all duration-500 ease-out"
               >
-                <Quote className="absolute top-6 right-6 w-8 h-8 text-brand-red/20 group-hover:text-brand-red/40 transition-colors" />
+                <Quote className="absolute top-4 right-4 md:top-6 md:right-6 w-6 h-6 md:w-8 md:h-8 text-brand-red/20 group-hover:text-brand-red/40 transition-colors" />
                 
-                <div className="mb-8">
-                  <p className="text-gray-400 text-sm leading-relaxed italic relative z-10">
+                <div className="mb-6 md:mb-8">
+                  <p className="text-gray-400 text-xs md:text-sm leading-relaxed italic relative z-10">
                     "{t.quote}"
                   </p>
                 </div>
 
-                <div className="flex items-center space-x-3 border-t border-white/5 pt-6">
+                <div className="flex items-center space-x-3 border-t border-white/5 pt-4 md:pt-6">
                   <div className="w-10 h-10 bg-brand-red/20 rounded-full flex items-center justify-center border border-brand-red/30 group-hover:scale-110 transition-transform duration-500">
                     <span className="text-brand-red font-black text-xs">{t.name.split(' ').map(n => n[0]).join('')}</span>
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-sm leading-tight">{t.name}</h4>
+                    <h4 className="text-white font-bold text-xs md:text-sm leading-tight">{t.name}</h4>
                     <p className="text-gray-500 text-[10px] uppercase font-black tracking-widest leading-tight mt-1">
                       {t.title} <span className="text-brand-red/60 mx-1">|</span> {t.company}
                     </p>
@@ -251,7 +251,7 @@ const WorkShowcase: React.FC = () => {
       </section>
 
       {/* Technical Footer CTA */}
-      <section className="py-32 bg-brand-red relative overflow-hidden">
+      <section className="py-20 md:py-32 bg-brand-red relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="grid grid-cols-12 gap-1 h-full w-full">
             {Array.from({length: 48}).map((_, i) => (
@@ -260,12 +260,12 @@ const WorkShowcase: React.FC = () => {
           </div>
         </div>
         <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl md:text-7xl font-black heading-font mb-10 uppercase tracking-tighter text-white leading-none">
+          <h2 className="text-4xl md:text-7xl font-black heading-font mb-6 md:mb-10 uppercase tracking-tighter text-white leading-none">
             Scale Your <br />Operations
           </h2>
           <Link 
             to="/contact" 
-            className="inline-block bg-brand-black text-white px-16 py-6 font-black uppercase tracking-[0.4em] hover:bg-white hover:text-brand-black transition-all shadow-2xl active:scale-95"
+            className="inline-block bg-brand-black text-white px-8 py-5 md:px-16 md:py-6 font-black uppercase tracking-[0.2em] md:tracking-[0.4em] hover:bg-white hover:text-brand-black transition-all shadow-2xl active:scale-95 text-xs md:text-sm"
           >
             Book a Strategy Call
           </Link>
