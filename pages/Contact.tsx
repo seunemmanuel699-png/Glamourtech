@@ -67,7 +67,7 @@ const Contact: React.FC = () => {
       });
 
       // 3. Synchronize with external automation webhook (Make.com)
-      const response = await fetch("https://fluentix.app.n8n.cloud/webhook/91820592-4f05-48d3-86e1-0d9d055e1599", {
+      const response = await fetch("https://fluentix.app.n8n.cloud/webhook/info@g", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
