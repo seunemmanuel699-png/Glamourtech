@@ -27,33 +27,7 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // 1. Generate client-side validation token using Google reCAPTCHA v3
-      let recaptchaToken = '';
-      if ((window as any).grecaptcha) {
-        try {
-          recaptchaToken = await new Promise<string>((resolve, reject) => {
-            (window as any).grecaptcha.ready(() => {
-              (window as any).grecaptcha.execute('6LdfXN8UAAAAAN977Aet8vZ6K8S2V4v3_S0_7G9H', { action: 'contact_submit' })
-                .then((token: string) => {
-                  resolve(token);
-                })
-                .catch((err: any) => {
-                  reject(err);
-                });
-            });
-          });
-          console.log('[reCAPTCHA v3] Token generated successfully:', recaptchaToken);
-          triggerNotification(
-            'grecaptcha Validated',
-            'Client-side Google reCAPTCHA v3 token successfully acquired.',
-            'system'
-          );
-        } catch (recaptchaErr) {
-          console.error('[reCAPTCHA v3] Error generating token:', recaptchaErr);
-        }
-      }
-
-      // 2. Save directly to Firebase Firestore for enterprise-grade persistent logging
+      // 1. Save directly to Firebase Firestore for enterprise-grade persistent logging
       await saveSubmission({
         name: formData.name,
         email: formData.email,
@@ -63,10 +37,9 @@ const Contact: React.FC = () => {
         budget: formData.budget,
         description: formData.description,
         formType: 'contact',
-        recaptchaToken: recaptchaToken || 'offline_fallback'
       });
 
-      // 3. Synchronize with external automation webhook (Make.com)
+      // 2. Synchronize with external automation webhook (Make.com)
       const response = await fetch("https://fluentix.app.n8n.cloud/webhook/info@g", {
         method: "POST",
         headers: {
