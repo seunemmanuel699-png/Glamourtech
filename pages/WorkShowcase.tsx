@@ -8,7 +8,17 @@ const projectCategories = [
     name: "Web & Mobile Applications",
     subcategories: [
       { name: "Enterprise Platforms", projects: [] },
-      { name: "Consumer Apps", projects: [] },
+      { 
+        name: "Consumer Apps", 
+        projects: [
+          {
+            title: "Komodor Coworking Space App",
+            description: "A coworking-space mobile app built for Android, showcasing a clean, user-friendly interface designed to help members manage their workspace experience end-to-end. Built as part of a client project, demonstrating practical Android UI development.",
+            videoUrl: "https://res.cloudinary.com/fxudag9y/video/upload/v1786058844/cleaned_1_j3dzim.mp4",
+            tags: ["Android", "Kotlin", "UI/UX", "Booking", "Community"]
+          }
+        ] 
+      },
       { name: "E-Commerce", projects: [] }
     ]
   },
@@ -85,17 +95,48 @@ const WorkShowcase: React.FC = () => {
                       {sub.projects.length} Deployments Active
                     </p>
 
-                    {/* Placeholder for future projects */}
-                    <div className="bg-black/40 rounded border border-white/5 h-40 flex items-center justify-center text-center p-4 group-hover:border-white/10 transition-colors">
-                      <div>
-                        <div className="w-8 h-8 rounded-full bg-brand-red/20 mx-auto mb-3 flex items-center justify-center">
-                          <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
-                        </div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                          Secure Systems Synchronizing...
-                        </span>
+                    {sub.projects.length > 0 ? (
+                      <div className="space-y-6">
+                        {sub.projects.map((project: any, pIdx: number) => (
+                          <div key={pIdx} className="bg-black/60 rounded border border-white/5 overflow-hidden group-hover:border-white/20 transition-colors">
+                            {project.videoUrl && (
+                              <div className="aspect-[9/16] bg-black relative max-h-[400px] overflow-hidden flex items-center justify-center">
+                                <video 
+                                  src={project.videoUrl} 
+                                  autoPlay 
+                                  muted 
+                                  loop 
+                                  playsInline 
+                                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                />
+                              </div>
+                            )}
+                            <div className="p-4">
+                              <h5 className="text-white font-bold text-sm mb-2">{project.title}</h5>
+                              <p className="text-gray-400 text-xs mb-4 leading-relaxed">{project.description}</p>
+                              <div className="flex flex-wrap gap-2">
+                                {project.tags.map((tag: string, tIdx: number) => (
+                                  <span key={tIdx} className="text-[9px] font-mono uppercase tracking-widest bg-brand-red/10 text-brand-red px-2 py-1 rounded border border-brand-red/20">
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    </div>
+                    ) : (
+                      <div className="bg-black/40 rounded border border-white/5 h-40 flex items-center justify-center text-center p-4 group-hover:border-white/10 transition-colors">
+                        <div>
+                          <div className="w-8 h-8 rounded-full bg-brand-red/20 mx-auto mb-3 flex items-center justify-center">
+                            <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+                          </div>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                            Secure Systems Synchronizing...
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
