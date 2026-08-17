@@ -11,6 +11,9 @@ import WorkShowcase from './pages/WorkShowcase';
 import Legal from './pages/Legal';
 import Preloader from './components/Preloader';
 
+import About from './pages/About';
+import Reviews from './pages/Reviews';
+
 const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
 
@@ -64,6 +67,8 @@ const App: React.FC = () => {
             <Route path="/industries" element={<Industries />} />
             <Route path="/training" element={<Training />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/reviews" element={<Reviews />} />
             <Route path="/privacy" element={<Legal />} />
             <Route path="/terms" element={<Legal />} />
             <Route path="/security" element={<Legal />} />
