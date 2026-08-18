@@ -1,20 +1,49 @@
-
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Logo } from './Logo';
-import { NotificationCenter } from './NotificationSystem';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Logo } from "./Logo";
+import { NotificationCenter } from "./NotificationSystem";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Home', path: '/', tooltip: 'Enterprise overview & AI ROI framework' },
-    { name: 'Work Showcase', path: '/work', tooltip: 'Case studies & video portfolio' },
-    { name: 'Solutions', path: '/solutions', tooltip: 'Autonomous agents & CRM orchestration' },
-    { name: 'Industries', path: '/industries', tooltip: 'Vertical-specific implementation logic' },
-    { name: 'Training', path: '/training', tooltip: 'Governance, advisory & team upskilling' },
-    { name: 'Contact', path: '/contact', tooltip: 'Direct scheduling & enterprise support' },
+    {
+      name: "Home",
+      path: "/",
+      tooltip: "Enterprise overview & AI ROI framework",
+    },
+    { name: "About", path: "/about", tooltip: "Our mission and core mandates" },
+    {
+      name: "Work Showcase",
+      path: "/work",
+      tooltip: "Case studies & video portfolio",
+    },
+    {
+      name: "Solutions",
+      path: "/solutions",
+      tooltip: "Autonomous agents & CRM orchestration",
+    },
+    {
+      name: "Reviews",
+      path: "/reviews",
+      tooltip: "Client validation and testimonials",
+    },
+    {
+      name: "Industries",
+      path: "/industries",
+      tooltip: "Vertical-specific implementation logic",
+    },
+    {
+      name: "Training",
+      path: "/training",
+      tooltip: "Governance, advisory & team upskilling",
+    },
+    {
+      name: "Contact",
+      path: "/contact",
+      tooltip: "Direct scheduling & enterprise support",
+    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -42,12 +71,14 @@ const Navbar: React.FC = () => {
               <Link
                 to={link.path}
                 className={`text-sm font-medium transition-colors hover:text-[#00D2FF] py-2 ${
-                  isActive(link.path) ? 'text-[#00D2FF] font-bold' : 'text-gray-400'
+                  isActive(link.path)
+                    ? "text-[#00D2FF] font-bold"
+                    : "text-gray-400"
                 }`}
               >
                 {link.name}
               </Link>
-              
+
               {/* Tooltip */}
               <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-brand-black border border-white/10 rounded-sm text-[10px] text-gray-300 font-bold uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-2xl z-[60]">
                 {link.tooltip}
@@ -55,7 +86,7 @@ const Navbar: React.FC = () => {
               </div>
             </div>
           ))}
-          
+
           {/* Notification Center */}
           <NotificationCenter />
 
@@ -77,17 +108,34 @@ const Navbar: React.FC = () => {
         {/* Mobile Toggle and Mobile Notification Center */}
         <div className="flex md:hidden items-center gap-4">
           <NotificationCenter />
-          <button
-            className="text-white p-2"
-            onClick={() => setIsOpen(!isOpen)}
-          >
+          <button className="text-white p-2" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
               </svg>
             )}
           </button>
@@ -101,7 +149,7 @@ const Navbar: React.FC = () => {
             <div key={link.path}>
               <Link
                 to={link.path}
-                className={`text-lg font-medium ${isActive(link.path) ? 'text-[#00D2FF]' : 'text-white'}`}
+                className={`text-lg font-medium ${isActive(link.path) ? "text-[#00D2FF]" : "text-white"}`}
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
