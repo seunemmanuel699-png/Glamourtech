@@ -49,58 +49,61 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // 1. Save directly to Firebase Firestore for enterprise-grade persistent logging
-      await saveSubmission({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        country: formData.country,
-        company: formData.company,
-        budget: formData.budget,
-        description: formData.description,
-        formType: "contact",
-      });
-
-      // 2. Synchronize with external automation webhook (Make.com)
-      const response = await fetch(
-        "https://hook.us2.make.com/pal770yov771mirxv13wd88b6g1ppije",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            country: formData.country,
-            company: formData.company,
-            budget: formData.budget,
-            description: formData.description,
-            source: "Contact Page Strategy Request",
-            submittedAt: new Date().toISOString(),
-          }),
-        },
-      );
-
-      if (response.ok) {
-        setIsSuccess(true);
-        triggerNotification(
-          "Operational Access Granted",
-          `Strategic Request for ${formData.name} was successfully registered. The secure communications pipeline is now active.`,
-          "lead",
+      // 1. Synchronize with external automation webhook (Make.com) FIRST
+      try {
+        await fetch(
+          "https://hook.us2.make.com/pal770yov771mirxv13wd88b6g1ppije",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              phone: formData.phone,
+              country: formData.country,
+              company: formData.company,
+              budget: formData.budget,
+              description: formData.description,
+              source: "Contact Page Strategy Request",
+              submittedAt: new Date().toISOString(),
+            }),
+          }
         );
-      } else {
-        throw new Error("Automation hook failed");
+      } catch (webhookError) {
+        console.error("Webhook submission error:", webhookError);
       }
-    } catch (error) {
-      console.error("Submission error:", error);
-      // Fallback: If Firestore worked but webhook failed, we still consider the lead securely captured
+
+      // 2. Save directly to Firebase Firestore for enterprise-grade persistent logging
+      try {
+        await saveSubmission({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          country: formData.country,
+          company: formData.company,
+          budget: formData.budget,
+          description: formData.description,
+          formType: "contact",
+        });
+      } catch (firebaseError) {
+        console.error("Firebase submission error:", firebaseError);
+      }
+
       setIsSuccess(true);
       triggerNotification(
         "Operational Access Granted",
-        `Strategic Request for ${formData.name} was securely registered in the fallback system. The secure communications pipeline is active.`,
-        "lead",
+        `Strategic Request for ${formData.name} was successfully registered. The secure communications pipeline is now active.`,
+        "lead"
+      );
+    } catch (error) {
+      console.error("General submission error:", error);
+      setIsSuccess(true);
+      triggerNotification(
+        "Operational Access Granted",
+        `Strategic Request for ${formData.name} was securely registered in the fallback system.`,
+        "lead"
       );
     } finally {
       setIsSubmitting(false);

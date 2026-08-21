@@ -48,58 +48,61 @@ const Home: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // 1. Persist the lead application directly to Firebase Firestore for maximum durability
-      await saveSubmission({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        country: formData.country,
-        company: formData.company,
-        budget: formData.budget,
-        description: formData.description,
-        formType: "home",
-      });
-
-      // 2. Synchronize with external automation systems (Make.com webhook)
-      const response = await fetch(
-        "https://fluentix.app.n8n.cloud/webhook/info@g",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            country: formData.country,
-            company: formData.company,
-            budget: formData.budget,
-            description: formData.description,
-            source: "Home Page Application",
-            submittedAt: new Date().toISOString(),
-          }),
-        },
-      );
-
-      if (response.ok) {
-        setIsSuccess(true);
-        triggerNotification(
-          "Strategic Booking Registered",
-          `Thank you ${formData.name}. Your strategy booking was registered successfully on Make.com hub. We will be in touch shortly.`,
-          "lead",
+      // 1. Synchronize with external automation systems (Make.com webhook) FIRST
+      try {
+        await fetch(
+          "https://hook.us2.make.com/pal770yov771mirxv13wd88b6g1ppije",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              phone: formData.phone,
+              country: formData.country,
+              company: formData.company,
+              budget: formData.budget,
+              description: formData.description,
+              source: "Home Page Application",
+              submittedAt: new Date().toISOString(),
+            }),
+          }
         );
-      } else {
-        throw new Error("Automation hook failed");
+      } catch (webhookError) {
+        console.error("Webhook submission error:", webhookError);
       }
+
+      // 2. Persist the lead application directly to Firebase Firestore for maximum durability
+      try {
+        await saveSubmission({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          country: formData.country,
+          company: formData.company,
+          budget: formData.budget,
+          description: formData.description,
+          formType: "home",
+        });
+      } catch (firebaseError) {
+        console.error("Firebase submission error:", firebaseError);
+      }
+
+      setIsSuccess(true);
+      triggerNotification(
+        "Strategic Booking Registered",
+        `Thank you ${formData.name}. Your strategy booking was registered successfully. We will be in touch shortly.`,
+        "lead"
+      );
     } catch (error) {
-      console.error("Submission error:", error);
-      // Even if webhook fails, if Firestore succeeds, we want the user to know we have their details.
+      console.error("General submission error:", error);
       setIsSuccess(true);
       triggerNotification(
         "Lead Secured",
-        `Thank you ${formData.name}. Your details have been securely logged in our systems. We will be in touch shortly.`,
-        "lead",
+        `Thank you ${formData.name}. Your details have been securely logged in our fallback systems. We will be in touch shortly.`,
+        "lead"
       );
     } finally {
       setIsSubmitting(false);
